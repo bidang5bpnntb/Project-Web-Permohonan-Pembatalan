@@ -334,10 +334,25 @@
         
         <div class="search-box" style="height: 36px; min-width: 250px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); box-shadow: none; padding: 0 12px; gap: 8px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px; height:15px; color:var(--text-muted); flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="text" placeholder="Cari nomor berkas, pemohon..." id="global-search" oninput="if(currentPage==='list-cacat') filterTable('cacat'); else if(currentPage==='list-putusan') filterTable('putusan');" style="padding: 0; font-size:13px;">
+          <input type="text" placeholder="Cari nomor berkas, pemohon..." id="global-search" oninput="handleGlobalSearch()" style="padding: 0; font-size:13px;">
         </div>
 
-        <button class="topbar-btn" title="Notifikasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
+        <div class="dropdown" id="notif-dropdown-wrapper">
+          <button class="topbar-btn" title="Notifikasi" onclick="toggleNotifPanel(event)" id="notif-btn" aria-label="Notifikasi" style="position:relative;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span id="notif-badge" style="display:none;position:absolute;top:4px;right:4px;width:8px;height:8px;background:#C0392B;border-radius:50%;border:1px solid white;"></span>
+          </button>
+          <div id="notif-panel" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-md);width:320px;z-index:1000;animation:fadeDown 0.2s ease;">
+            <div style="padding:16px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.04em;">NOTIFIKASI</span>
+              <button onclick="clearAllNotif()" style="font-size:11px;color:var(--text-muted);background:none;border:none;cursor:pointer;">Hapus Semua</button>
+            </div>
+            <div id="notif-list" style="max-height:320px;overflow-y:auto;"></div>
+            <div style="padding:12px 18px;border-top:1px solid var(--border);text-align:center;">
+              <button onclick="navigateTo('list-cacat');document.getElementById('notif-panel').style.display='none';" style="font-size:12px;color:var(--text-muted);background:none;border:none;cursor:pointer;">Lihat semua permohonan →</button>
+            </div>
+          </div>
+        </div>
         
         <div class="dropdown">
           <div class="user-chip" onclick="toggleUserMenu(event)" title="Menu Akun">
@@ -367,9 +382,9 @@
         <div class="page-header"><h1>Selamat Datang<em>,</em> di SIPENTAS</h1><p>Sistem Informasi Pengendalian &amp; Penanganan Sengketa — Kanwil BPN NTB</p></div>
         <div class="stats-grid">
           <div class="stat-card" onclick="showStatList('all')" style="cursor:pointer" title="Lihat semua permohonan"><div class="stat-label">Total Permohonan</div><div class="stat-value" id="stat-total">0</div><div class="stat-meta">Seluruh kategori</div></div>
-          <div class="stat-card" onclick="showStatList('cacat')" style="cursor:pointer" title="Lihat cacat administrasi"><div class="stat-label">Cacat Administrasi</div><div class="stat-value" id="stat-cacat">0</div><div class="stat-meta">Permohonan aktif</div></div>
-          <div class="stat-card" onclick="showStatList('putusan')" style="cursor:pointer" title="Lihat putusan pengadilan"><div class="stat-label">Putusan Pengadilan</div><div class="stat-value" id="stat-putusan">0</div><div class="stat-meta">Permohonan aktif</div></div>
-          <div class="stat-card" onclick="showStatList('selesai')" style="cursor:pointer" title="Lihat kasus selesai"><div class="stat-label">Selesai (SK Terbit)</div><div class="stat-value" id="stat-selesai">0</div><div class="stat-meta">Kasus tuntas</div></div>
+          <div class="stat-card" onclick="showStatList('cacat')" style="cursor:pointer" title="Lihat cacat administrasi"><div class="stat-label">Cacat Administrasi</div><div class="stat-value" id="stat-cacat">0</div><div class="stat-meta"><span id="stat-cacat-aktif">0</span> aktif · <span id="stat-cacat-selesai">0</span> selesai</div></div>
+          <div class="stat-card" onclick="showStatList('putusan')" style="cursor:pointer" title="Lihat putusan pengadilan"><div class="stat-label">Putusan Pengadilan</div><div class="stat-value" id="stat-putusan">0</div><div class="stat-meta"><span id="stat-putusan-aktif">0</span> aktif · <span id="stat-putusan-selesai">0</span> selesai</div></div>
+          <div class="stat-card" onclick="showStatList('selesai')" style="cursor:pointer" title="Lihat kasus selesai"><div class="stat-label">Selesai (SK Terbit)</div><div class="stat-value" id="stat-selesai">0</div><div class="stat-meta">Kasus tuntas proses</div></div>
         </div>
         <div class="dashboard-grid">
           <div class="dashboard-main">
@@ -377,7 +392,7 @@
               <div class="card-header"><span class="card-title">Permohonan Terkini</span><button class="card-action" onclick="navigateTo('list-cacat')">Lihat Semua</button></div>
               <div class="scrollable">
                 <table class="data-table">
-                  <thead><tr><th>No. Berkas</th><th>Pemohon</th><th>Jenis</th><th>Tahapan</th><th>Status</th></tr></thead>
+                  <thead><tr><th>No. Berkas</th><th>Pemohon</th><th>Jenis</th><th>Kantor Pertanahan</th><th>Status</th></tr></thead>
                   <tbody id="recent-cases-tbody"><tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:32px">Belum ada data</td></tr></tbody>
                 </table>
               </div>
@@ -500,8 +515,6 @@
       </div>
 
       <div class="page" id="page-kalender"><div class="page-header"><h1>Kalender <em>Kegiatan</em></h1></div><div style="display:grid;grid-template-columns:1fr 300px;gap:24px" id="calendar-layout"><div class="card"><div class="card-header"><div style="display:flex;align-items:center;gap:16px"><span class="cal-month-label" id="full-cal-label" style="font-family:'DM Serif Display',serif;font-size:20px"></span><div class="cal-nav-btns"><button class="cal-nav-btn" onclick="fullCalPrev()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button><button class="cal-nav-btn" onclick="fullCalToday()">Hari Ini</button><button class="cal-nav-btn" onclick="fullCalNext()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button></div></div><div style="display:flex;gap:16px;font-size:11px;align-items:center"><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#050505;display:inline-block"></span>Agenda</span><span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:#c0392b;display:inline-block"></span>Libur Nasional</span></div></div><div class="card-body"><div class="cal-days-header" style="grid-template-columns:repeat(7,1fr)"><div class="cal-day-name" style="color:#c0392b">Min</div><div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div><div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div><div class="cal-day-name">Jum</div><div class="cal-day-name">Sab</div></div><div class="cal-grid" id="full-cal-grid" style="gap:4px"></div></div></div><div style="display:flex;flex-direction:column;gap:16px"><div class="card"><div class="card-header"><span class="card-title">Tambah Kegiatan</span></div><div class="card-body"><div class="form-group" style="margin-bottom:12px"><label for="new-event-date">Tanggal</label><input type="date" class="form-control" id="new-event-date"></div><div class="form-group" style="margin-bottom:12px"><label for="new-event-title">Judul Kegiatan</label><input type="text" class="form-control" id="new-event-title"></div><div class="form-group" style="margin-bottom:16px"><label for="new-event-desc">Keterangan (opsional)</label><textarea class="form-control" id="new-event-desc" style="min-height:60px"></textarea></div><button class="btn btn-primary" style="width:100%" onclick="addCalendarEvent()">Tambah Kegiatan</button></div></div><div class="card" style="flex:1"><div class="card-header"><span class="card-title">Kegiatan Bulan Ini</span></div><div class="card-body" style="padding:12px 16px;max-height:350px;overflow-y:auto" id="events-list-panel"></div></div></div></div></div>
-      <div class="page" id="page-tahapan"><div class="page-header"><h1>Alur <em>Tahapan</em></h1></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:20px"><div class="card"><div class="card-header"><span class="card-title">Cacat Administrasi</span></div><div class="card-body"><div class="stepper" id="stepper-alur"></div></div></div><div class="card"><div class="card-header"><span class="card-title">Putusan Pengadilan</span></div><div class="card-body"><div class="stepper" id="stepper-alur-2"></div></div></div></div></div>
-
       <div class="page" id="page-pengaturan">
         <div class="page-header">
           <h1>Pengaturan <em>Akun</em></h1>
@@ -618,7 +631,40 @@
   </div>
 </div>
 
-<div id="toast-container"></div>
+<div class="modal-overlay" id="modal-edit-kasus">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-header">
+      <div class="modal-title">Edit Data Permohonan</div>
+      <button class="modal-close" onclick="closeModal('modal-edit-kasus')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <form id="form-edit-kasus" onsubmit="saveEditKasus(event)">
+        <div class="form-grid" style="margin-bottom:16px">
+          <div class="form-group"><label for="e-nomorberkas">Nomor Berkas *</label><input type="text" class="form-control" id="e-nomorberkas" required></div>
+          <div class="form-group"><label for="e-jenis">Jenis Permohonan *</label><select class="form-control" id="e-jenis" required><option value="cacat">Cacat Administrasi</option><option value="putusan">Putusan Pengadilan</option></select></div>
+          <div class="form-group"><label for="e-kantah">Kantor Pertanahan *</label><select class="form-control" id="e-kantah" required><option>Kota Mataram</option><option>Lombok Barat</option><option>Lombok Tengah</option><option>Lombok Timur</option><option>Lombok Utara</option><option>Sumbawa</option><option>Sumbawa Barat</option><option>Dompu</option><option>Bima</option><option>Kota Bima</option></select></div>
+          <div class="form-group"><label for="e-tglUsulan">Tanggal Usulan *</label><input type="date" class="form-control" id="e-tglUsulan" required></div>
+          <div class="form-group"><label for="e-pemohon">Nama Pemohon *</label><input type="text" class="form-control" id="e-pemohon" required></div>
+          <div class="form-group"><label for="e-kontak">No. Kontak Pemohon</label><input type="text" class="form-control" id="e-kontak"></div>
+          <div class="form-group"><label for="e-pj">Penanggung Jawab *</label><input type="text" class="form-control" id="e-pj" required></div>
+          <div class="form-group" id="e-noputs-group"><label for="e-noputs">No. Putusan Pengadilan</label><input type="text" class="form-control" id="e-noputs"></div>
+          <div class="form-group"><label for="e-pemeganghak">Nama Pemegang Hak</label><input type="text" class="form-control" id="e-pemeganghak"></div>
+          <div class="form-group"><label for="e-nosert">No. Sertipikat</label><input type="text" class="form-control" id="e-nosert"></div>
+          <div class="form-group"><label for="e-jenissert">Jenis Sertipikat</label><select class="form-control" id="e-jenissert"><option value="">-- Pilih --</option><option>Hak Milik</option><option>HGB</option><option>HGU</option><option>Hak Pakai</option><option>Hak Pengelolaan</option></select></div>
+          <div class="form-group"><label for="e-luas">Luas Tanah (m²)</label><input type="number" class="form-control" id="e-luas" min="1"></div>
+        </div>
+        <div class="form-group" style="margin-bottom:16px"><label for="e-uraian">Uraian Singkat Kasus</label><textarea class="form-control" id="e-uraian" style="min-height:80px"></textarea></div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-edit-kasus')">Batal</button>
+      <button class="btn btn-primary" onclick="document.getElementById('form-edit-kasus').dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}))">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13"/><polyline points="7 3 7 8 15 8"/></svg>
+        Simpan Perubahan
+      </button>
+    </div>
+  </div>
+</div>
 
 <div class="modal-overlay" id="modal-stat-list">
   <div class="modal" style="max-width:800px">
@@ -844,6 +890,12 @@ function checkLogin() {
   } else {
     document.getElementById('login-container').style.display = 'flex';
     document.getElementById('app-container').style.display = 'none';
+    // Isi username jika "Ingat Saya" pernah aktif
+    const savedUser = localStorage.getItem('sipentas-remember-user');
+    if (savedUser) {
+      document.getElementById('l-username').value = savedUser;
+      document.getElementById('l-remember').checked = true;
+    }
   }
 }
 
@@ -851,9 +903,15 @@ function handleLogin(e) {
   e.preventDefault();
   const user = document.getElementById('l-username').value;
   const pass = document.getElementById('l-password').value;
+  const remember = document.getElementById('l-remember').checked;
   
   if (user === 'admin' && pass === 'admin123') {
     localStorage.setItem('sipentas-logged-in', 'true');
+    if (remember) {
+      localStorage.setItem('sipentas-remember-user', user);
+    } else {
+      localStorage.removeItem('sipentas-remember-user');
+    }
     showToast('Login berhasil! Selamat datang.', 'success');
     document.getElementById('l-password').value = '';
     checkLogin();
@@ -920,6 +978,7 @@ function handleUbahSandi(e) { e.preventDefault(); const baru = document.getEleme
 // ══════════════════════════════════════════════════════════
 // 4. UTILITAS UMUM
 // ══════════════════════════════════════════════════════════
+const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
 function escapeHTML(str) { if (typeof str !== 'string') return str; return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)); }
 function formatNumber(num) { if (!num) return '0'; return new Intl.NumberFormat('id-ID').format(num); }
 function readFileAsBase64(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = error => reject(error); reader.readAsDataURL(file); }); }
@@ -974,8 +1033,7 @@ const HOLIDAYS_2025 = {
   '2026-04-03': 'Wafat Yesus Kristus',
   '2026-05-01': 'Hari Buruh Internasional',
   '2026-05-14': 'Kenaikan Isa Almasih',
-  '2026-05-27': 'Hari Raya Waisak 2570 BE',
-  '2026-05-27': 'Idul Adha 10 Zulhijah 1447 H',
+  '2026-05-27': ['Hari Raya Waisak 2570 BE', 'Idul Adha 10 Zulhijah 1447 H'],
   '2026-06-01': 'Hari Lahir Pancasila',
   '2026-06-17': 'Tahun Baru Islam 1 Muharram 1448 H',
   '2026-08-17': 'Hari Kemerdekaan Republik Indonesia',
@@ -1012,25 +1070,66 @@ function navigateTo(page, param) {
   if (page === 'dashboard') { renderDashboard(); renderMiniCal(); } 
   if (page === 'tambah') { resetForm(param); initWilayah(); } 
   if (page === 'kalender') { renderFullCal(); renderEventsList(); } 
-  if (page === 'tahapan') renderAlur();
+  // 'tahapan' dihapus dari menu — renderAlur() tidak dipanggil lagi
   
   updateStats();
 }
 
 function updateStats() {
+  const totalCacat = cases.filter(c => c.jenis === 'cacat').length;
+  const totalPutusan = cases.filter(c => c.jenis === 'putusan').length;
+  const cacatAktif = cases.filter(c => c.jenis === 'cacat' && c.currentStep < 5).length;
+  const putusanAktif = cases.filter(c => c.jenis === 'putusan' && c.currentStep < 5).length;
+  const cacatSelesai = cases.filter(c => c.jenis === 'cacat' && c.currentStep >= 5).length;
+  const putusanSelesai = cases.filter(c => c.jenis === 'putusan' && c.currentStep >= 5).length;
+
   document.getElementById('stat-total').textContent = cases.length;
-  document.getElementById('stat-cacat').textContent = cases.filter(c => c.jenis === 'cacat').length;
-  document.getElementById('stat-putusan').textContent = cases.filter(c => c.jenis === 'putusan').length;
+  document.getElementById('stat-cacat').textContent = totalCacat;
+  document.getElementById('stat-putusan').textContent = totalPutusan;
   document.getElementById('stat-selesai').textContent = cases.filter(c => c.currentStep >= 5).length;
-  document.getElementById('badge-cacat').textContent = cases.filter(c => c.jenis === 'cacat').length;
-  document.getElementById('badge-putusan').textContent = cases.filter(c => c.jenis === 'putusan').length;
+  
+  const elCA = document.getElementById('stat-cacat-aktif'); if(elCA) elCA.textContent = cacatAktif;
+  const elCS = document.getElementById('stat-cacat-selesai'); if(elCS) elCS.textContent = cacatSelesai;
+  const elPA = document.getElementById('stat-putusan-aktif'); if(elPA) elPA.textContent = putusanAktif;
+  const elPS = document.getElementById('stat-putusan-selesai'); if(elPS) elPS.textContent = putusanSelesai;
+
+  document.getElementById('badge-cacat').textContent = totalCacat;
+  document.getElementById('badge-putusan').textContent = totalPutusan;
+  
+  // Update notifikasi saat stats berubah
+  renderNotifPanel();
 }
 
 function renderDashboard() {
   const tbody = document.getElementById('recent-cases-tbody');
   const recent = [...cases].sort((a,b) => new Date(b.tglUsulan) - new Date(a.tglUsulan)).slice(0,8);
-  if (!recent.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:32px">Belum ada data</td></tr>'; return; }
-  tbody.innerHTML = recent.map(c => `<tr onclick="openDetail('${c.id}')"><td><code style="font-size:12px;background:var(--surface);padding:2px 7px;border-radius:4px">${escapeHTML(c.nomorberkas)}</code></td><td style="font-size:12px">${escapeHTML(c.pemohon)}</td><td><span class="badge ${c.jenis === 'cacat' ? 'badge-admin' : 'badge-court'}"><span class="badge-dot" style="background:${c.jenis==='cacat'?'var(--gray-dark)':'var(--white)'}"></span> ${c.jenis === 'cacat' ? 'Cacat Adm.' : 'Putusan PN'}</span></td><td style="font-size:12px">${escapeHTML(c.kantah)}</td><td><span class="status-badge ${STATUS_MAP[c.currentStep]?.cls || 'status-0'}">${STATUS_MAP[c.currentStep]?.label || '-'}</span></td></tr>`).join('');
+  if (!recent.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:32px">Belum ada data</td></tr>'; }
+  else {
+    tbody.innerHTML = recent.map(c => `<tr onclick="openDetail('${c.id}')"><td><code style="font-size:12px;background:var(--surface);padding:2px 7px;border-radius:4px">${escapeHTML(c.nomorberkas)}</code></td><td style="font-size:12px">${escapeHTML(c.pemohon)}</td><td><span class="badge ${c.jenis === 'cacat' ? 'badge-admin' : 'badge-court'}"><span class="badge-dot" style="background:${c.jenis==='cacat'?'var(--gray-dark)':'var(--white)'}"></span> ${c.jenis === 'cacat' ? 'Cacat Adm.' : 'Putusan PN'}</span></td><td style="font-size:12px">${escapeHTML(c.kantah)}</td><td><span class="status-badge ${STATUS_MAP[c.currentStep]?.cls || 'status-0'}">${STATUS_MAP[c.currentStep]?.label || '-'}</span></td></tr>`).join('');
+  }
+
+  // ── Render Agenda Mendatang ──
+  const upcomingEl = document.getElementById('upcoming-agenda');
+  if (!upcomingEl) return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const in30 = new Date(today); in30.setDate(today.getDate() + 30);
+
+  // Kumpulkan dari calendarEvents
+  const upcoming = calendarEvents
+    .filter(e => { const d = new Date(e.date); d.setHours(0,0,0,0); return d >= today && d <= in30; })
+    .sort((a,b) => new Date(a.date) - new Date(b.date))
+    .slice(0, 5);
+
+  if (!upcoming.length) {
+    upcomingEl.innerHTML = '<p style="font-size:12px;color:var(--text-muted);text-align:center;padding:12px 0">Tidak ada agenda dalam 30 hari ke depan.<br><button onclick="navigateTo(\'kalender\')" style="margin-top:8px;font-size:12px;color:var(--text);background:none;border:1px solid var(--border);border-radius:4px;padding:4px 12px;cursor:pointer">+ Tambah Kegiatan</button></p>';
+  } else {
+    upcomingEl.innerHTML = upcoming.map(e => {
+      const d = new Date(e.date);
+      const dayNum = d.getDate();
+      const mon = MONTHS[d.getMonth()].substring(0,3).toUpperCase();
+      return `<div class="agenda-item"><div class="agenda-date-badge">${dayNum}<small>${mon}</small></div><div class="agenda-info"><div class="agenda-title">${escapeHTML(e.title)}</div><div class="agenda-meta">${e.desc ? escapeHTML(e.desc).substring(0,50) : 'Kegiatan terjadwal'}</div></div></div>`;
+    }).join('');
+  }
 }
 
 function renderTable(type) {
@@ -1094,7 +1193,19 @@ function togglePutsanField() {
 async function submitForm(e) { 
   e.preventDefault(); 
   const jenis = document.getElementById('f-jenis').value; 
-  if (!jenis) { showToast('Pilih jenis permohonan!', 'error'); return; } 
+  if (!jenis) { showToast('Pilih jenis permohonan!', 'error'); return; }
+
+  // Validasi nomor berkas duplikat (issue #19)
+  const nomorberkas = document.getElementById('f-nomorberkas').value.trim();
+  if (cases.some(c => c.nomorberkas.toLowerCase() === nomorberkas.toLowerCase())) {
+    showToast('Nomor berkas sudah ada! Gunakan nomor yang berbeda.', 'error'); return;
+  }
+
+  // Validasi luas tanah (issue #20)
+  const luasVal = document.getElementById('f-luas').value;
+  if (luasVal && (isNaN(luasVal) || Number(luasVal) <= 0)) {
+    showToast('Luas tanah harus berupa angka positif!', 'error'); return;
+  }
 
   // Membaca Dokumen Usulan
   const fileUsulanInput = document.getElementById('f-dokumenusulan');
@@ -1123,7 +1234,7 @@ async function submitForm(e) {
 
   cases.push({ 
     id: 'c' + Date.now(), 
-    nomorberkas: document.getElementById('f-nomorberkas').value, 
+    nomorberkas, 
     jenis, kantah: document.getElementById('f-kantah').value, 
     tglUsulan: document.getElementById('f-tglUsulan').value, 
     pemohon: document.getElementById('f-pemohon').value, 
@@ -1134,7 +1245,7 @@ async function submitForm(e) {
     pemeganghak: document.getElementById('f-pemeganghak').value,
     jenissert: document.getElementById('f-jenissert').value, 
     nosert: document.getElementById('f-nosert').value, 
-    luas: document.getElementById('f-luas').value, 
+    luas: luasVal, 
     kabupaten: document.getElementById('f-kabupaten').value,
     kecamatan: document.getElementById('f-kecamatan').value,
     desa: document.getElementById('f-desa').value,
@@ -1203,7 +1314,13 @@ function openDetail(id) {
         <div class="detail-meta-item"><strong>Kantah:</strong>${escapeHTML(c.kantah)}</div>
         <div class="detail-meta-item"><strong>Tgl. Usulan:</strong>${fmtDate(c.tglUsulan)}</div>
       </div>
-      <div style="margin-top:20px; display:flex; gap:10px;">${btnUnduhUsulan}</div>
+      <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+        ${btnUnduhUsulan}
+        <button class="btn btn-secondary btn-sm" onclick="openEditKasus('${c.id}')" style="font-size:11px;padding:6px 12px;">
+          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" style="margin-right:6px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit Data Permohonan
+        </button>
+      </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 360px;gap:20px" class="dashboard-grid">
       <div class="card"><div class="card-header"><span class="card-title">Riwayat Tahapan</span></div><div class="card-body"><div class="stepper">${steps}</div></div></div>
@@ -1250,18 +1367,26 @@ function viewTahapan(id, stepIdx) {
 
 
 // ══════════════════════════════════════════════════════════
-// 9. KALENDER & ALUR TAHAPAN
+// 9. KALENDER & AGENDA
 // ══════════════════════════════════════════════════════════
-const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']; let miniCalDate = new Date(); let fullCalDate = new Date();
+// MONTHS sudah didefinisikan di Seksi 4
+let miniCalDate = new Date(); let fullCalDate = new Date();
 function dateKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; } function getEventsForDate(key) { return calendarEvents.filter(e => e.date === key); }
-function renderMiniCal() { const d = miniCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('mini-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); let style = ''; if (!isOther && holiday) style = 'background:#FFF0F0;color:#c0392b;border-radius:50%;font-weight:700;'; else if (!isOther && events.length) style = 'background:#E8F5E9;color:#1B5E20;border-radius:50%;font-weight:700;'; if (isToday) style = 'background:var(--black);color:white;border-radius:50%;font-weight:700;'; let cls = 'cal-cell' + (isOther ? ' other-month' : '') + (holiday && !isOther ? ' holiday' : '') + (!isOther && events.length ? ' has-event' : ''); html += `<div class="${cls}" style="${style}" onclick="${!isOther ? `openDayModal('${key}')` : ''}">${isOther ? '' : dayNum}${holiday && !isOther ? `<div class="cal-tooltip">${holiday}</div>` : ''}</div>`; } document.getElementById('mini-cal-grid').innerHTML = html; }
+
+// Fungsi helper agar agenda juga di-refresh saat event kalender berubah
+function refreshAgendaAndCal() {
+  renderFullCal(); renderMiniCal();
+  if (currentPage === 'dashboard') renderDashboard();
+}
+
+function renderMiniCal() { const d = miniCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('mini-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); let style = ''; if (!isOther && holiday) style = 'background:#FFF0F0;color:#c0392b;border-radius:50%;font-weight:700;'; else if (!isOther && events.length) style = 'background:#E8F5E9;color:#1B5E20;border-radius:50%;font-weight:700;'; if (isToday) style = 'background:var(--black);color:white;border-radius:50%;font-weight:700;'; let cls = 'cal-cell' + (isOther ? ' other-month' : '') + (holiday && !isOther ? ' holiday' : '') + (!isOther && events.length ? ' has-event' : ''); const tooltipHolidays = holiday && !isOther ? (Array.isArray(holiday) ? holiday.join(' · ') : holiday) : ''; html += `<div class="${cls}" style="${style}" onclick="${!isOther ? `openDayModal('${key}')` : ''}">${isOther ? '' : dayNum}${tooltipHolidays ? `<div class="cal-tooltip">${tooltipHolidays}</div>` : ''}</div>`; } document.getElementById('mini-cal-grid').innerHTML = html; }
 function miniCalPrev() { miniCalDate = new Date(miniCalDate.getFullYear(), miniCalDate.getMonth() - 1, 1); renderMiniCal(); } function miniCalNext() { miniCalDate = new Date(miniCalDate.getFullYear(), miniCalDate.getMonth() + 1, 1); renderMiniCal(); }
-function renderFullCal() { const d = fullCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('full-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = !isOther ? getEventsForDate(key) : []; const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); let bgStyle = isOther ? 'opacity:0.3;' : ''; if (isToday) bgStyle += 'background:var(--black);color:white;border-radius:6px;'; else if (!isOther && holiday) bgStyle += 'background:#FFF0F0;'; else if (!isOther && events.length) bgStyle += 'background:#F0FFF4;'; html += `<div class="cal-cell" style="${bgStyle}min-height:64px;align-items:flex-start;padding:6px;border:1px solid var(--border);border-radius:4px;flex-direction:column;gap:3px" onclick="${!isOther ? `openDayModal('${key}')` : ''}"><div style="${!isToday && (i % 7 === 0 || holiday) ? 'color:#c0392b;' : ''}${isToday ? 'color:white;' : ''}font-size:12px;font-weight:${isToday||holiday?'700':'400'}">${isOther ? '' : dayNum}</div>${holiday && !isOther ? `<div style="font-size:9px;color:#c0392b;font-weight:600;">${holiday.slice(0,22)}</div>` : ''}${events.slice(0,2).map(e => `<div style="font-size:9px;background:#1B5E20;color:white;padding:1px 5px;border-radius:3px;overflow:hidden">${escapeHTML(e.title).slice(0,14)}</div>`).join('')}</div>`; } document.getElementById('full-cal-grid').innerHTML = html; renderEventsList(); }
+function renderFullCal() { const d = fullCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('full-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = !isOther ? getEventsForDate(key) : []; const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); let bgStyle = isOther ? 'opacity:0.3;' : ''; if (isToday) bgStyle += 'background:var(--black);color:white;border-radius:6px;'; else if (!isOther && holiday) bgStyle += 'background:#FFF0F0;'; else if (!isOther && events.length) bgStyle += 'background:#F0FFF4;'; const holidayLabel = holiday && !isOther ? (Array.isArray(holiday) ? holiday.map(h=>`<div style="font-size:9px;color:#c0392b;font-weight:600;">${h.slice(0,22)}</div>`).join('') : `<div style="font-size:9px;color:#c0392b;font-weight:600;">${holiday.slice(0,22)}</div>`) : ''; html += `<div class="cal-cell" style="${bgStyle}min-height:64px;align-items:flex-start;padding:6px;border:1px solid var(--border);border-radius:4px;flex-direction:column;gap:3px" onclick="${!isOther ? `openDayModal('${key}')` : ''}"><div style="${!isToday && (i % 7 === 0 || holiday) ? 'color:#c0392b;' : ''}${isToday ? 'color:white;' : ''}font-size:12px;font-weight:${isToday||holiday?'700':'400'}">${isOther ? '' : dayNum}</div>${holidayLabel}${events.slice(0,2).map(e => `<div style="font-size:9px;background:#1B5E20;color:white;padding:1px 5px;border-radius:3px;overflow:hidden">${escapeHTML(e.title).slice(0,14)}</div>`).join('')}</div>`; } document.getElementById('full-cal-grid').innerHTML = html; renderEventsList(); }
 function fullCalPrev() { fullCalDate = new Date(fullCalDate.getFullYear(), fullCalDate.getMonth() - 1, 1); renderFullCal(); } function fullCalNext() { fullCalDate = new Date(fullCalDate.getFullYear(), fullCalDate.getMonth() + 1, 1); renderFullCal(); } function fullCalToday() { fullCalDate = new Date(); renderFullCal(); }
-function openDayModal(key) { const [y, m, d] = key.split('-'); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); document.getElementById('modal-agenda-title').textContent = `Kegiatan — ${parseInt(d)} ${MONTHS[parseInt(m)-1]} ${y}`; let html = holiday ? `<div style="background:#FFF5F5;border:1px solid #FFD0CC;border-radius:8px;padding:12px 16px;margin-bottom:14px;color:#c0392b;font-weight:500;font-size:13px">🎌 ${holiday}</div>` : ''; events.forEach(e => { html += `<div style="border:1px solid #C8E6C9;border-radius:8px;padding:12px 16px;margin-bottom:10px;background:#F1FBF1"><div style="font-size:14px;font-weight:600;color:#1B5E20;">${escapeHTML(e.title)}</div>${e.desc ? `<div style="font-size:12px;color:#388E3C;margin-top:4px;line-height:1.5;">${escapeHTML(e.desc)}</div>` : ''}<button onclick="deleteEvent('${e.id}');closeModal('modal-agenda')" style="margin-top:8px;font-size:11px;color:#c0392b;background:none;border:none;cursor:pointer;padding:0">Hapus Kegiatan</button></div>`; }); html += `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Tambah Kegiatan</div><input type="text" class="form-control" id="quick-event-title" placeholder="Judul kegiatan..." style="margin-bottom:8px"><textarea class="form-control" id="quick-event-desc" placeholder="Keterangan (opsional)..." style="margin-bottom:10px;min-height:60px;resize:vertical"></textarea><button class="btn btn-primary" style="width:100%;font-size:13px" onclick="quickAddEvent('${key}')">Simpan Kegiatan</button></div>`; document.getElementById('modal-agenda-body').innerHTML = html; openModal('modal-agenda'); }
-function addCalendarEvent() { const d = document.getElementById('new-event-date').value, t = document.getElementById('new-event-title').value, desc = document.getElementById('new-event-desc').value; if(d&&t) { calendarEvents.push({id:'ev'+Date.now(), date:d, title:t, desc:desc}); document.getElementById('new-event-title').value=''; document.getElementById('new-event-desc').value=''; saveData(); renderFullCal(); renderMiniCal(); showToast('Kegiatan tersimpan!','success'); } else { showToast('Isi tanggal dan judul kegiatan!','error'); } }
-function quickAddEvent(key) { const t = document.getElementById('quick-event-title').value; const desc = document.getElementById('quick-event-desc')?.value || ''; if(t) { calendarEvents.push({id:'ev'+Date.now(), date:key, title:t, desc:desc}); saveData(); renderFullCal(); renderMiniCal(); closeModal('modal-agenda'); showToast('Kegiatan tersimpan!','success'); } } 
-function deleteEvent(id) { calendarEvents = calendarEvents.filter(e => e.id !== id); saveData(); renderFullCal(); renderMiniCal(); } 
+function openDayModal(key) { const [y, m, d] = key.split('-'); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); document.getElementById('modal-agenda-title').textContent = `Kegiatan — ${parseInt(d)} ${MONTHS[parseInt(m)-1]} ${y}`; let html = ''; if (holiday) { const hs = Array.isArray(holiday) ? holiday : [holiday]; html += hs.map(h => `<div style="background:#FFF5F5;border:1px solid #FFD0CC;border-radius:8px;padding:12px 16px;margin-bottom:14px;color:#c0392b;font-weight:500;font-size:13px">🎌 ${h}</div>`).join(''); } events.forEach(e => { html += `<div style="border:1px solid #C8E6C9;border-radius:8px;padding:12px 16px;margin-bottom:10px;background:#F1FBF1"><div style="font-size:14px;font-weight:600;color:#1B5E20;">${escapeHTML(e.title)}</div>${e.desc ? `<div style="font-size:12px;color:#388E3C;margin-top:4px;line-height:1.5;">${escapeHTML(e.desc)}</div>` : ''}<button onclick="deleteEvent('${e.id}');closeModal('modal-agenda')" style="margin-top:8px;font-size:11px;color:#c0392b;background:none;border:none;cursor:pointer;padding:0">Hapus Kegiatan</button></div>`; }); html += `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Tambah Kegiatan</div><input type="text" class="form-control" id="quick-event-title" placeholder="Judul kegiatan..." style="margin-bottom:8px"><textarea class="form-control" id="quick-event-desc" placeholder="Keterangan (opsional)..." style="margin-bottom:10px;min-height:60px;resize:vertical"></textarea><button class="btn btn-primary" style="width:100%;font-size:13px" onclick="quickAddEvent('${key}')">Simpan Kegiatan</button></div>`; document.getElementById('modal-agenda-body').innerHTML = html; openModal('modal-agenda'); }
+function addCalendarEvent() { const d = document.getElementById('new-event-date').value, t = document.getElementById('new-event-title').value, desc = document.getElementById('new-event-desc').value; if(d&&t) { calendarEvents.push({id:'ev'+Date.now(), date:d, title:t, desc:desc}); document.getElementById('new-event-title').value=''; document.getElementById('new-event-desc').value=''; saveData(); refreshAgendaAndCal(); showToast('Kegiatan tersimpan!','success'); } else { showToast('Isi tanggal dan judul kegiatan!','error'); } }
+function quickAddEvent(key) { const t = document.getElementById('quick-event-title').value; const desc = document.getElementById('quick-event-desc')?.value || ''; if(t) { calendarEvents.push({id:'ev'+Date.now(), date:key, title:t, desc:desc}); saveData(); refreshAgendaAndCal(); closeModal('modal-agenda'); showToast('Kegiatan tersimpan!','success'); } } 
+function deleteEvent(id) { calendarEvents = calendarEvents.filter(e => e.id !== id); saveData(); refreshAgendaAndCal(); } 
 function renderEventsList() { const d = fullCalDate; const y = d.getFullYear(), m = d.getMonth(); const monthEvents = calendarEvents.filter(e => { const [ey, em] = e.date.split('-'); return parseInt(ey)===y && parseInt(em)-1===m; }).sort((a,b)=>a.date.localeCompare(b.date)); const panel = document.getElementById('events-list-panel'); if (!monthEvents.length) { panel.innerHTML = '<p style="font-size:12px;color:#999;text-align:center;padding:12px">Belum ada kegiatan bulan ini.</p>'; return; } panel.innerHTML = monthEvents.map(e => { const [ey,em,ed] = e.date.split('-'); return `<div style="border-bottom:1px solid var(--border);padding:10px 0;"><div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px">${parseInt(ed)} ${MONTHS[parseInt(em)-1]} ${ey}</div><div style="font-size:13px;font-weight:500;color:var(--text)">${escapeHTML(e.title)}</div>${e.desc?`<div style="font-size:11px;color:var(--text-muted);margin-top:2px">${escapeHTML(e.desc)}</div>`:''}</div>`; }).join(''); }
 function showStatList(filter) {
   const titles = { all: 'Semua Permohonan', cacat: 'Cacat Administrasi', putusan: 'Putusan Pengadilan', selesai: 'Selesai (SK Terbit)' };
@@ -1282,21 +1407,191 @@ function showStatList(filter) {
   openModal('modal-stat-list');
 }
 
-function renderAlur() { const steps1 = TAHAPAN_LABELS.map((label, i) => `<div class="step-item"><div class="step-num done">${i+1}</div><div class="step-content"><div class="step-title">${label}</div></div></div>`).join(''); document.getElementById('stepper-alur').innerHTML = steps1; document.getElementById('stepper-alur-2').innerHTML = steps1; }
+function renderAlur() { /* Dead code - halaman tahapan sudah dihapus dari menu. Fungsi ini dipertahankan untuk mencegah error jika ada referensi lama. */ }
 
 // ══════════════════════════════════════════════════════════
-// 10. INISIALISASI APLIKASI
+// 10. FITUR EDIT KASUS (issue #8)
+// ══════════════════════════════════════════════════════════
+let editingCaseId = '';
+
+function openEditKasus(id) {
+  const c = cases.find(x => x.id === id);
+  if (!c) return;
+  editingCaseId = id;
+
+  document.getElementById('e-nomorberkas').value = c.nomorberkas || '';
+  document.getElementById('e-jenis').value = c.jenis || 'cacat';
+  document.getElementById('e-kantah').value = c.kantah || '';
+  document.getElementById('e-tglUsulan').value = c.tglUsulan || '';
+  document.getElementById('e-pemohon').value = c.pemohon || '';
+  document.getElementById('e-kontak').value = c.kontak || '';
+  document.getElementById('e-pj').value = c.pj || '';
+  document.getElementById('e-noputs').value = c.noputs || '';
+  document.getElementById('e-pemeganghak').value = c.pemeganghak || '';
+  document.getElementById('e-nosert').value = c.nosert || '';
+  document.getElementById('e-jenissert').value = c.jenissert || '';
+  document.getElementById('e-luas').value = c.luas || '';
+  document.getElementById('e-uraian').value = c.uraian || '';
+  document.getElementById('e-noputs-group').style.display = c.jenis === 'putusan' ? '' : 'none';
+  openModal('modal-edit-kasus');
+}
+
+function saveEditKasus(e) {
+  e.preventDefault();
+  const c = cases.find(x => x.id === editingCaseId);
+  if (!c) return;
+
+  const newNomor = document.getElementById('e-nomorberkas').value.trim();
+  // Cek duplikat nomor (kecuali berkas itu sendiri)
+  if (cases.some(x => x.id !== editingCaseId && x.nomorberkas.toLowerCase() === newNomor.toLowerCase())) {
+    showToast('Nomor berkas sudah digunakan berkas lain!', 'error'); return;
+  }
+  const luasVal = document.getElementById('e-luas').value;
+  if (luasVal && (isNaN(luasVal) || Number(luasVal) <= 0)) {
+    showToast('Luas tanah harus angka positif!', 'error'); return;
+  }
+
+  c.nomorberkas = newNomor;
+  c.jenis = document.getElementById('e-jenis').value;
+  c.kantah = document.getElementById('e-kantah').value;
+  c.tglUsulan = document.getElementById('e-tglUsulan').value;
+  c.pemohon = document.getElementById('e-pemohon').value;
+  c.kontak = document.getElementById('e-kontak').value;
+  c.pj = document.getElementById('e-pj').value;
+  c.noputs = document.getElementById('e-noputs').value;
+  c.pemeganghak = document.getElementById('e-pemeganghak').value;
+  c.nosert = document.getElementById('e-nosert').value;
+  c.jenissert = document.getElementById('e-jenissert').value;
+  c.luas = luasVal;
+  c.uraian = document.getElementById('e-uraian').value;
+
+  saveData();
+  updateStats();
+  closeModal('modal-edit-kasus');
+  showToast('Data permohonan berhasil diperbarui!', 'success');
+  openDetail(editingCaseId);
+}
+
+
+// ══════════════════════════════════════════════════════════
+// 11. NOTIFIKASI (issue #7)
+// ══════════════════════════════════════════════════════════
+function getNotifications() {
+  const notifs = [];
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  // Kasus tanpa aktivitas lebih dari 30 hari
+  cases.forEach(c => {
+    if (c.currentStep >= 5) return; // skip selesai
+    const lastActivity = c.tahapan?.find(t => t?.date) ? 
+      new Date(Math.max(...c.tahapan.filter(t=>t?.date).map(t=>new Date(t.date)))) : new Date(c.tglUsulan);
+    const diffDays = Math.floor((today - lastActivity) / (1000 * 60 * 60 * 24));
+    if (diffDays >= 14) {
+      notifs.push({ type: 'warning', msg: `Berkas <strong>${escapeHTML(c.nomorberkas)}</strong> tidak ada update selama ${diffDays} hari.`, id: c.id, date: lastActivity });
+    }
+  });
+
+  // Agenda dalam 7 hari ke depan
+  const in7 = new Date(today); in7.setDate(today.getDate() + 7);
+  calendarEvents.filter(e => {
+    const d = new Date(e.date); d.setHours(0,0,0,0);
+    return d >= today && d <= in7;
+  }).forEach(e => {
+    notifs.push({ type: 'agenda', msg: `Agenda: <strong>${escapeHTML(e.title)}</strong> pada ${fmtDate(e.date)}`, date: new Date(e.date) });
+  });
+
+  return notifs.sort((a,b) => a.date - b.date);
+}
+
+function renderNotifPanel() {
+  const notifs = getNotifications();
+  const badge = document.getElementById('notif-badge');
+  if (badge) badge.style.display = notifs.length ? 'block' : 'none';
+  
+  const list = document.getElementById('notif-list');
+  if (!list) return;
+  if (!notifs.length) {
+    list.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-muted);font-size:13px;">Tidak ada notifikasi.</div>';
+    return;
+  }
+  list.innerHTML = notifs.map(n => `
+    <div style="padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:10px;cursor:${n.id?'pointer':'default'}" onclick="${n.id?`document.getElementById('notif-panel').style.display='none';openDetail('${n.id}')`:''}" >
+      <div style="width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0;background:${n.type==='warning'?'#D35400':'#1565C0'}"></div>
+      <div style="font-size:12.5px;line-height:1.55;color:var(--text-sub)">${n.msg}</div>
+    </div>`).join('');
+}
+
+function toggleNotifPanel(e) {
+  e.stopPropagation();
+  const panel = document.getElementById('notif-panel');
+  const isVisible = panel.style.display === 'block';
+  panel.style.display = isVisible ? 'none' : 'block';
+  if (!isVisible) renderNotifPanel();
+}
+
+function clearAllNotif() {
+  const list = document.getElementById('notif-list');
+  if (list) list.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-muted);font-size:13px;">Tidak ada notifikasi.</div>';
+  const badge = document.getElementById('notif-badge');
+  if (badge) badge.style.display = 'none';
+}
+
+window.addEventListener('click', function(e) {
+  const panel = document.getElementById('notif-panel');
+  const wrapper = document.getElementById('notif-dropdown-wrapper');
+  if (panel && wrapper && !wrapper.contains(e.target)) {
+    panel.style.display = 'none';
+  }
+});
+
+
+// ══════════════════════════════════════════════════════════
+// 12. PENCARIAN GLOBAL (issue #11)
+// ══════════════════════════════════════════════════════════
+function handleGlobalSearch() {
+  const q = (document.getElementById('global-search')?.value || '').trim().toLowerCase();
+  if (currentPage === 'list-cacat') { filterTable('cacat'); return; }
+  if (currentPage === 'list-putusan') { filterTable('putusan'); return; }
+  if (!q) return;
+  // Di halaman lain: cari kasus lalu navigate ke hasil
+  const found = cases.filter(c =>
+    c.nomorberkas.toLowerCase().includes(q) ||
+    c.pemohon.toLowerCase().includes(q) ||
+    (c.desa||'').toLowerCase().includes(q) ||
+    (c.noputs||'').toLowerCase().includes(q) ||
+    (c.kantah||'').toLowerCase().includes(q)
+  );
+  if (found.length === 1) {
+    openDetail(found[0].id);
+    document.getElementById('global-search').value = '';
+  } else if (found.length > 1) {
+    // Navigate ke halaman yang relevan dan terapkan filter
+    const jenis = found[0].jenis;
+    navigateTo('list-' + jenis);
+    // filterTable sudah dipanggil oleh navigateTo, search sudah dikosongkan
+    // kita isi ulang search dan re-filter
+    setTimeout(() => {
+      document.getElementById('global-search').value = q;
+      filterTable(jenis);
+    }, 50);
+  } else {
+    showToast('Tidak ditemukan berkas yang cocok.', '');
+  }
+}
+
+
+// ══════════════════════════════════════════════════════════
+// 13. INISIALISASI APLIKASI
 // ══════════════════════════════════════════════════════════
 if (cases.length === 0) { 
   cases = [ { id: 'c1', nomorberkas: 'BPN/001', jenis: 'cacat', kantah: 'Kota Mataram', tglUsulan: '2025-02-10', pemohon: 'H. Ahmad', pj: 'Budi Santoso', pemeganghak: 'H. Ahmad', luas: '250', kabupaten: 'Kota Mataram', kecamatan: 'Sekarbela', desa: 'Jempong Baru', tahapan: [{date:'2025-02-10', note:'Berkas dianalisa'}], currentStep: 1 } ]; 
   saveData(); 
 }
 
-initWilayah();      // Inisialisasi awal dropdown wilayah
-updateStats();      
-renderDashboard();  
-renderMiniCal();    
-renderAlur();       
+initWilayah();
+updateStats();
+renderDashboard();
+renderMiniCal();
 
 // Inisialisasi Tampilan Berdasarkan Status Login
 checkLogin();
