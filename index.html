@@ -152,8 +152,12 @@
   select.form-control { cursor: pointer; } textarea.form-control { resize: vertical; min-height: 80px; }
   
   .search-row { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; }
-  .search-box { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 14px; background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; }
-  .search-box:focus-within { border-color: var(--black); box-shadow: 0 0 0 3px rgba(5,5,5,0.06); } .search-box input { border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: none; width: 100%; padding: 10px 0; }
+  
+  /* UPDATE STYLING SEARCH BOX MENJADI ROUND SQUARE / PILL */
+  .search-box { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: 20px; padding: 0 14px; background: var(--surface); transition: all 0.2s; }
+  .search-box:focus-within { border-color: var(--black); box-shadow: 0 2px 8px rgba(0,0,0,0.05); background: var(--white); } 
+  .search-box input { border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: none; width: 100%; padding: 10px 0; }
+  
   .filter-select { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); outline: none; cursor: pointer; }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; cursor: pointer; border: none; outline: none; transition: all 0.2s; white-space: nowrap; }
@@ -234,7 +238,6 @@
   }
   @media (max-width: 768px) {
     .stats-grid { grid-template-columns: 1fr 1fr; } .form-grid { grid-template-columns: 1fr !important; } .info-grid { grid-template-columns: 1fr; } .dashboard-grid { display: flex; flex-direction: column; } .settings-grid { grid-template-columns: 1fr; } .detail-metas { flex-direction: column; gap: 8px; }
-    /* DIHAPUS: Sembunyikan kolom pada mobile, agar tabel tetap lebar dan bisa di-scroll horizontal */
   }
   @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
 </style>
@@ -621,12 +624,13 @@
 // ══════════════════════════════════════════════════════════
 // 1. DATA MASTER & SISTEM WILAYAH NTB (KABUPATEN -> KECAMATAN -> DESA)
 // ══════════════════════════════════════════════════════════
+// DAFTAR DIPERLENGKAP UNTUK SELURUH WILAYAH ADMINISTRATIF DI NTB
 const rawNTB = {
   "Kota Mataram": {
     "Ampenan": "Ampenan Selatan,Ampenan Tengah,Ampenan Utara,Banjar,Bintaro,Dayan Peken,Kebun Sari,Pande Besi,Pejeruk,Taman Sari",
-    "Cakranegara": "Cakranegara Barat,Cakranegara Selatan,Cakranegara Selatan Baru,Cakranegara Timur,Cakranegara Utara,Cakra Barat,Karang Taliwang,Mayura,Sayang-sayang,Taliwang",
+    "Cakranegara": "Cakranegara Barat,Cakranegara Selatan,Cakranegara Selatan Baru,Cakranegara Timur,Cakranegara Utara,Cilinaya,Karang Taliwang,Mayura,Sapta Marga,Sayang-sayang",
     "Mataram": "Mataram Timur,Pageangan,Pejanggik,Punia,Pagutan,Pagutan Barat,Pagutan Timur",
-    "Sandubaya": "Abian Tubuh Baru,Babakan,Dasan Cermen,Mandalika,Selagalas,Turida,Bertais",
+    "Sandubaya": "Abian Tubuh Baru,Babakan,Bertais,Dasan Cermen,Mandalika,Selagalas,Turida",
     "Sekarbela": "Jempong Baru,Karang Pule,Kekalik Jaya,Tanjung Karang,Tanjung Karang Permai",
     "Selaparang": "Dasan Agung,Dasan Agung Baru,Gomong,Karang Baru,Mataram Barat,Monjok,Monjok Barat,Monjok Timur,Rembiga"
   },
