@@ -112,6 +112,8 @@
   .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; transition: box-shadow 0.2s, transform 0.2s; cursor: default; position: relative; overflow: hidden; }
   .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--black); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
   .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); } .stat-card:hover::after { transform: scaleX(1); }
+  .stat-card[onclick] { cursor: pointer; }
+  .stat-card[onclick]:hover .stat-label { color: var(--text-sub); }
   .stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
   .stat-value { font-family: 'DM Serif Display', serif; font-size: 36px; line-height: 1; color: var(--text); }
   .stat-meta { font-size: 12px; color: var(--text-muted); margin-top: 6px; } .stat-meta strong { color: var(--text-sub); }
@@ -314,8 +316,6 @@
       <div class="nav-item" onclick="navigateTo('tambah')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Tambah Permohonan</div>
       <div class="nav-section-label" style="margin-top:8px">Informasi</div>
       <div class="nav-item" onclick="navigateTo('kalender')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Kalender Kegiatan</div>
-      <div class="nav-item" onclick="navigateTo('tahapan')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Alur Tahapan</div>
-      
       <div class="nav-section-label" style="margin-top:8px">Sistem</div>
       <div class="nav-item" onclick="navigateTo('pengaturan')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Pengaturan</div>
     </nav>
@@ -332,9 +332,9 @@
       </div>
       <div class="topbar-right">
         
-        <div class="search-box" style="height: 36px; min-width: 250px; border: none; background: transparent; box-shadow: none;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px; height:16px"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="text" placeholder="Cari nomor berkas, pemohon..." id="global-search" oninput="if(currentPage==='list-cacat') filterTable('cacat'); else if(currentPage==='list-putusan') filterTable('putusan');" style="padding: 0;">
+        <div class="search-box" style="height: 36px; min-width: 250px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius-sm); box-shadow: none; padding: 0 12px; gap: 8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px; height:15px; color:var(--text-muted); flex-shrink:0;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Cari nomor berkas, pemohon..." id="global-search" oninput="if(currentPage==='list-cacat') filterTable('cacat'); else if(currentPage==='list-putusan') filterTable('putusan');" style="padding: 0; font-size:13px;">
         </div>
 
         <button class="topbar-btn" title="Notifikasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></button>
@@ -366,10 +366,10 @@
       <div class="page active" id="page-dashboard">
         <div class="page-header"><h1>Selamat Datang<em>,</em> di SIPENTAS</h1><p>Sistem Informasi Pengendalian &amp; Penanganan Sengketa — Kanwil BPN NTB</p></div>
         <div class="stats-grid">
-          <div class="stat-card"><div class="stat-label">Total Permohonan</div><div class="stat-value" id="stat-total">0</div><div class="stat-meta">Seluruh kategori</div></div>
-          <div class="stat-card"><div class="stat-label">Cacat Administrasi</div><div class="stat-value" id="stat-cacat">0</div><div class="stat-meta">Permohonan aktif</div></div>
-          <div class="stat-card"><div class="stat-label">Putusan Pengadilan</div><div class="stat-value" id="stat-putusan">0</div><div class="stat-meta">Permohonan aktif</div></div>
-          <div class="stat-card"><div class="stat-label">Selesai (SK Terbit)</div><div class="stat-value" id="stat-selesai">0</div><div class="stat-meta">Kasus tuntas</div></div>
+          <div class="stat-card" onclick="showStatList('all')" style="cursor:pointer" title="Lihat semua permohonan"><div class="stat-label">Total Permohonan</div><div class="stat-value" id="stat-total">0</div><div class="stat-meta">Seluruh kategori</div></div>
+          <div class="stat-card" onclick="showStatList('cacat')" style="cursor:pointer" title="Lihat cacat administrasi"><div class="stat-label">Cacat Administrasi</div><div class="stat-value" id="stat-cacat">0</div><div class="stat-meta">Permohonan aktif</div></div>
+          <div class="stat-card" onclick="showStatList('putusan')" style="cursor:pointer" title="Lihat putusan pengadilan"><div class="stat-label">Putusan Pengadilan</div><div class="stat-value" id="stat-putusan">0</div><div class="stat-meta">Permohonan aktif</div></div>
+          <div class="stat-card" onclick="showStatList('selesai')" style="cursor:pointer" title="Lihat kasus selesai"><div class="stat-label">Selesai (SK Terbit)</div><div class="stat-value" id="stat-selesai">0</div><div class="stat-meta">Kasus tuntas</div></div>
         </div>
         <div class="dashboard-grid">
           <div class="dashboard-main">
@@ -619,6 +619,17 @@
 </div>
 
 <div id="toast-container"></div>
+
+<div class="modal-overlay" id="modal-stat-list">
+  <div class="modal" style="max-width:800px">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-stat-list-title">Daftar Permohonan</div>
+      <button class="modal-close" onclick="closeModal('modal-stat-list')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="modal-stat-list-body" style="padding:0"></div>
+    <div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-stat-list')">Tutup</button></div>
+  </div>
+</div>
 
 <script>
 // ══════════════════════════════════════════════════════════
@@ -928,7 +939,49 @@ let calendarEvents = JSON.parse(localStorage.getItem('sipentas-events') || '[]')
 
 const TAHAPAN_LABELS = ['Surat Usulan dari Kantah', 'Telaah Staff', 'Penelitian Lapang', 'Gelar Kasus', 'Penerbitan SK Pembatalan', 'Laporan Penyelesaian Kasus'];
 const STATUS_MAP = { 0: { label: 'Usulan Masuk', cls: 'status-0' }, 1: { label: 'Telaah Staff', cls: 'status-1' }, 2: { label: 'Penelitian Lapang', cls: 'status-2' }, 3: { label: 'Gelar Kasus', cls: 'status-3' }, 4: { label: 'Penerbitan SK', cls: 'status-4' }, 5: { label: 'Selesai', cls: 'status-5' } };
-const HOLIDAYS_2025 = { '2025-01-01': 'Tahun Baru Masehi', '2025-01-27': 'Isra Mi\'raj', '2025-01-29': 'Tahun Baru Imlek', '2025-03-29': 'Nyepi', '2025-03-31': 'Idul Fitri', '2025-04-01': 'Idul Fitri', '2025-05-01': 'Hari Buruh', '2025-08-17': 'Hari Kemerdekaan RI', '2025-12-25': 'Natal' };
+const HOLIDAYS_2025 = {
+  '2025-01-01': 'Tahun Baru Masehi',
+  '2025-01-27': 'Isra Mi\'raj Nabi Muhammad SAW',
+  '2025-01-28': 'Cuti Bersama Isra Mi\'raj',
+  '2025-01-29': 'Tahun Baru Imlek 2576',
+  '2025-03-29': 'Hari Suci Nyepi (Tahun Baru Saka 1947)',
+  '2025-03-28': 'Wafat Yesus Kristus',
+  '2025-03-31': 'Idul Fitri 1 Syawal 1446 H',
+  '2025-04-01': 'Idul Fitri 2 Syawal 1446 H',
+  '2025-04-02': 'Cuti Bersama Idul Fitri',
+  '2025-04-03': 'Cuti Bersama Idul Fitri',
+  '2025-04-04': 'Cuti Bersama Idul Fitri',
+  '2025-04-07': 'Cuti Bersama Idul Fitri',
+  '2025-04-18': 'Wafat Yesus Kristus',
+  '2025-05-01': 'Hari Buruh Internasional',
+  '2025-05-12': 'Hari Raya Waisak 2569 BE',
+  '2025-05-13': 'Kenaikan Isa Almasih',
+  '2025-05-29': 'Kenaikan Isa Almasih',
+  '2025-06-01': 'Hari Lahir Pancasila',
+  '2025-06-06': 'Idul Adha 10 Zulhijah 1446 H',
+  '2025-06-07': 'Cuti Bersama Idul Adha',
+  '2025-06-27': 'Tahun Baru Islam 1 Muharram 1447 H',
+  '2025-08-17': 'Hari Kemerdekaan Republik Indonesia',
+  '2025-09-05': 'Maulid Nabi Muhammad SAW',
+  '2025-12-25': 'Hari Raya Natal',
+  '2025-12-26': 'Cuti Bersama Natal',
+  '2026-01-01': 'Tahun Baru Masehi',
+  '2026-01-16': 'Isra Mi\'raj Nabi Muhammad SAW',
+  '2026-01-17': 'Tahun Baru Imlek 2577',
+  '2026-02-17': 'Hari Suci Nyepi (Tahun Baru Saka 1948)',
+  '2026-03-20': 'Idul Fitri 1 Syawal 1447 H',
+  '2026-03-21': 'Idul Fitri 2 Syawal 1447 H',
+  '2026-04-03': 'Wafat Yesus Kristus',
+  '2026-05-01': 'Hari Buruh Internasional',
+  '2026-05-14': 'Kenaikan Isa Almasih',
+  '2026-05-27': 'Hari Raya Waisak 2570 BE',
+  '2026-05-27': 'Idul Adha 10 Zulhijah 1447 H',
+  '2026-06-01': 'Hari Lahir Pancasila',
+  '2026-06-17': 'Tahun Baru Islam 1 Muharram 1448 H',
+  '2026-08-17': 'Hari Kemerdekaan Republik Indonesia',
+  '2026-08-25': 'Maulid Nabi Muhammad SAW',
+  '2026-12-25': 'Hari Raya Natal'
+};
 
 function saveData() { 
   localStorage.setItem('sipentas-cases', JSON.stringify(cases)); 
@@ -1201,12 +1254,34 @@ function viewTahapan(id, stepIdx) {
 // ══════════════════════════════════════════════════════════
 const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember']; let miniCalDate = new Date(); let fullCalDate = new Date();
 function dateKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; } function getEventsForDate(key) { return calendarEvents.filter(e => e.date === key); }
-function renderMiniCal() { const d = miniCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('mini-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); let cls = 'cal-cell' + (isOther ? ' other-month' : '') + (!isOther && new Date(y, m, dayNum).toDateString() === today.toDateString() ? ' today' : '') + (holiday ? ' holiday' : '') + (!isOther && events.length ? ' has-event' : ''); html += `<div class="${cls}" onclick="${!isOther ? `openDayModal('${key}')` : ''}">${isOther ? '' : dayNum}${holiday ? `<div class="cal-tooltip">${holiday}</div>` : ''}</div>`; } document.getElementById('mini-cal-grid').innerHTML = html; }
+function renderMiniCal() { const d = miniCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('mini-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); let style = ''; if (!isOther && holiday) style = 'background:#FFF0F0;color:#c0392b;border-radius:50%;font-weight:700;'; else if (!isOther && events.length) style = 'background:#E8F5E9;color:#1B5E20;border-radius:50%;font-weight:700;'; if (isToday) style = 'background:var(--black);color:white;border-radius:50%;font-weight:700;'; let cls = 'cal-cell' + (isOther ? ' other-month' : '') + (holiday && !isOther ? ' holiday' : '') + (!isOther && events.length ? ' has-event' : ''); html += `<div class="${cls}" style="${style}" onclick="${!isOther ? `openDayModal('${key}')` : ''}">${isOther ? '' : dayNum}${holiday && !isOther ? `<div class="cal-tooltip">${holiday}</div>` : ''}</div>`; } document.getElementById('mini-cal-grid').innerHTML = html; }
 function miniCalPrev() { miniCalDate = new Date(miniCalDate.getFullYear(), miniCalDate.getMonth() - 1, 1); renderMiniCal(); } function miniCalNext() { miniCalDate = new Date(miniCalDate.getFullYear(), miniCalDate.getMonth() + 1, 1); renderMiniCal(); }
-function renderFullCal() { const d = fullCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('full-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = !isOther ? getEventsForDate(key) : []; const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); html += `<div class="cal-cell" style="${isOther ? 'opacity:0.3;' : ''}${isToday ? 'background:var(--black);color:white;border-radius:6px;' : ''}min-height:64px;align-items:flex-start;padding:6px;border:1px solid var(--border);border-radius:4px;flex-direction:column;gap:3px" onclick="${!isOther ? `openDayModal('${key}')` : ''}"><div style="${(i % 7 === 0 || holiday) ? 'color:#c0392b;' : ''}${isToday ? 'color:white;' : ''}font-size:12px;font-weight:${isToday||holiday?'700':'400'}">${isOther ? '' : dayNum}</div>${holiday && !isOther ? `<div style="font-size:9px;color:#c0392b;">${holiday.slice(0,20)}</div>` : ''}${events.slice(0,2).map(e => `<div style="font-size:9px;background:var(--black);color:white;padding:1px 5px;border-radius:3px;overflow:hidden">${escapeHTML(e.title).slice(0,14)}</div>`).join('')}</div>`; } document.getElementById('full-cal-grid').innerHTML = html; renderEventsList(); }
+function renderFullCal() { const d = fullCalDate; const y = d.getFullYear(), m = d.getMonth(); document.getElementById('full-cal-label').textContent = `${MONTHS[m]} ${y}`; const first = new Date(y, m, 1).getDay(); const days = new Date(y, m + 1, 0).getDate(); const today = new Date(); let html = ''; let total = Math.ceil((first + days) / 7) * 7; for (let i = 0; i < total; i++) { const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); const holiday = HOLIDAYS_2025[key]; const events = !isOther ? getEventsForDate(key) : []; const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); let bgStyle = isOther ? 'opacity:0.3;' : ''; if (isToday) bgStyle += 'background:var(--black);color:white;border-radius:6px;'; else if (!isOther && holiday) bgStyle += 'background:#FFF0F0;'; else if (!isOther && events.length) bgStyle += 'background:#F0FFF4;'; html += `<div class="cal-cell" style="${bgStyle}min-height:64px;align-items:flex-start;padding:6px;border:1px solid var(--border);border-radius:4px;flex-direction:column;gap:3px" onclick="${!isOther ? `openDayModal('${key}')` : ''}"><div style="${!isToday && (i % 7 === 0 || holiday) ? 'color:#c0392b;' : ''}${isToday ? 'color:white;' : ''}font-size:12px;font-weight:${isToday||holiday?'700':'400'}">${isOther ? '' : dayNum}</div>${holiday && !isOther ? `<div style="font-size:9px;color:#c0392b;font-weight:600;">${holiday.slice(0,22)}</div>` : ''}${events.slice(0,2).map(e => `<div style="font-size:9px;background:#1B5E20;color:white;padding:1px 5px;border-radius:3px;overflow:hidden">${escapeHTML(e.title).slice(0,14)}</div>`).join('')}</div>`; } document.getElementById('full-cal-grid').innerHTML = html; renderEventsList(); }
 function fullCalPrev() { fullCalDate = new Date(fullCalDate.getFullYear(), fullCalDate.getMonth() - 1, 1); renderFullCal(); } function fullCalNext() { fullCalDate = new Date(fullCalDate.getFullYear(), fullCalDate.getMonth() + 1, 1); renderFullCal(); } function fullCalToday() { fullCalDate = new Date(); renderFullCal(); }
-function openDayModal(key) { const [y, m, d] = key.split('-'); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); document.getElementById('modal-agenda-title').textContent = `Kegiatan — ${parseInt(d)} ${MONTHS[parseInt(m)-1]} ${y}`; let html = holiday ? `<div style="background:#FFF5F5;border:1px solid #FFD0CC;border-radius:8px;padding:12px 16px;margin-bottom:14px;color:#c0392b;font-weight:500;font-size:13px">🎌 ${holiday}</div>` : ''; events.forEach(e => { html += `<div style="border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:10px"><div style="font-size:14px;font-weight:500;">${escapeHTML(e.title)}</div><button onclick="deleteEvent('${e.id}');closeModal('modal-agenda')" style="margin-top:8px;font-size:11px;color:#c0392b;background:none;border:none;cursor:pointer;padding:0">Hapus Kegiatan</button></div>`; }); html += `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><input type="text" class="form-control" id="quick-event-title" placeholder="Judul..." style="margin-bottom:8px"><button class="btn btn-primary" style="width:100%;font-size:13px" onclick="quickAddEvent('${key}')">Tambah</button></div>`; document.getElementById('modal-agenda-body').innerHTML = html; openModal('modal-agenda'); }
-function addCalendarEvent() { const d = document.getElementById('new-event-date').value, t = document.getElementById('new-event-title').value; if(d&&t) { calendarEvents.push({id:'ev'+Date.now(), date:d, title:t}); saveData(); renderFullCal(); renderMiniCal(); showToast('Tersimpan!','success'); } } function quickAddEvent(key) { const t = document.getElementById('quick-event-title').value; if(t) { calendarEvents.push({id:'ev'+Date.now(), date:key, title:t}); saveData(); renderFullCal(); renderMiniCal(); closeModal('modal-agenda'); showToast('Tersimpan!','success'); } } function deleteEvent(id) { calendarEvents = calendarEvents.filter(e => e.id !== id); saveData(); renderFullCal(); renderMiniCal(); } function renderEventsList() { document.getElementById('events-list-panel').innerHTML = '<p style="font-size:12px;color:#999;text-align:center">Daftar agenda disederhanakan di tampilan ini.</p>'; }
+function openDayModal(key) { const [y, m, d] = key.split('-'); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); document.getElementById('modal-agenda-title').textContent = `Kegiatan — ${parseInt(d)} ${MONTHS[parseInt(m)-1]} ${y}`; let html = holiday ? `<div style="background:#FFF5F5;border:1px solid #FFD0CC;border-radius:8px;padding:12px 16px;margin-bottom:14px;color:#c0392b;font-weight:500;font-size:13px">🎌 ${holiday}</div>` : ''; events.forEach(e => { html += `<div style="border:1px solid #C8E6C9;border-radius:8px;padding:12px 16px;margin-bottom:10px;background:#F1FBF1"><div style="font-size:14px;font-weight:600;color:#1B5E20;">${escapeHTML(e.title)}</div>${e.desc ? `<div style="font-size:12px;color:#388E3C;margin-top:4px;line-height:1.5;">${escapeHTML(e.desc)}</div>` : ''}<button onclick="deleteEvent('${e.id}');closeModal('modal-agenda')" style="margin-top:8px;font-size:11px;color:#c0392b;background:none;border:none;cursor:pointer;padding:0">Hapus Kegiatan</button></div>`; }); html += `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)"><div style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Tambah Kegiatan</div><input type="text" class="form-control" id="quick-event-title" placeholder="Judul kegiatan..." style="margin-bottom:8px"><textarea class="form-control" id="quick-event-desc" placeholder="Keterangan (opsional)..." style="margin-bottom:10px;min-height:60px;resize:vertical"></textarea><button class="btn btn-primary" style="width:100%;font-size:13px" onclick="quickAddEvent('${key}')">Simpan Kegiatan</button></div>`; document.getElementById('modal-agenda-body').innerHTML = html; openModal('modal-agenda'); }
+function addCalendarEvent() { const d = document.getElementById('new-event-date').value, t = document.getElementById('new-event-title').value, desc = document.getElementById('new-event-desc').value; if(d&&t) { calendarEvents.push({id:'ev'+Date.now(), date:d, title:t, desc:desc}); document.getElementById('new-event-title').value=''; document.getElementById('new-event-desc').value=''; saveData(); renderFullCal(); renderMiniCal(); showToast('Kegiatan tersimpan!','success'); } else { showToast('Isi tanggal dan judul kegiatan!','error'); } }
+function quickAddEvent(key) { const t = document.getElementById('quick-event-title').value; const desc = document.getElementById('quick-event-desc')?.value || ''; if(t) { calendarEvents.push({id:'ev'+Date.now(), date:key, title:t, desc:desc}); saveData(); renderFullCal(); renderMiniCal(); closeModal('modal-agenda'); showToast('Kegiatan tersimpan!','success'); } } 
+function deleteEvent(id) { calendarEvents = calendarEvents.filter(e => e.id !== id); saveData(); renderFullCal(); renderMiniCal(); } 
+function renderEventsList() { const d = fullCalDate; const y = d.getFullYear(), m = d.getMonth(); const monthEvents = calendarEvents.filter(e => { const [ey, em] = e.date.split('-'); return parseInt(ey)===y && parseInt(em)-1===m; }).sort((a,b)=>a.date.localeCompare(b.date)); const panel = document.getElementById('events-list-panel'); if (!monthEvents.length) { panel.innerHTML = '<p style="font-size:12px;color:#999;text-align:center;padding:12px">Belum ada kegiatan bulan ini.</p>'; return; } panel.innerHTML = monthEvents.map(e => { const [ey,em,ed] = e.date.split('-'); return `<div style="border-bottom:1px solid var(--border);padding:10px 0;"><div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:2px">${parseInt(ed)} ${MONTHS[parseInt(em)-1]} ${ey}</div><div style="font-size:13px;font-weight:500;color:var(--text)">${escapeHTML(e.title)}</div>${e.desc?`<div style="font-size:11px;color:var(--text-muted);margin-top:2px">${escapeHTML(e.desc)}</div>`:''}</div>`; }).join(''); }
+function showStatList(filter) {
+  const titles = { all: 'Semua Permohonan', cacat: 'Cacat Administrasi', putusan: 'Putusan Pengadilan', selesai: 'Selesai (SK Terbit)' };
+  document.getElementById('modal-stat-list-title').textContent = titles[filter] || 'Daftar Permohonan';
+  let filtered = cases;
+  if (filter === 'cacat') filtered = cases.filter(c => c.jenis === 'cacat');
+  else if (filter === 'putusan') filtered = cases.filter(c => c.jenis === 'putusan');
+  else if (filter === 'selesai') filtered = cases.filter(c => c.currentStep >= 5);
+  
+  if (!filtered.length) {
+    document.getElementById('modal-stat-list-body').innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-muted)">Belum ada data permohonan</div>';
+  } else {
+    document.getElementById('modal-stat-list-body').innerHTML = `<div class="scrollable"><table class="data-table"><thead><tr><th>No. Berkas</th><th>Jenis</th><th>Kantah</th><th>Pemohon</th><th>Desa/Kecamatan</th><th>Tgl. Usulan</th><th>Status</th></tr></thead><tbody>${filtered.sort((a,b)=>new Date(b.tglUsulan)-new Date(a.tglUsulan)).map(c => {
+      const domisili = [c.desa, c.kecamatan].filter(Boolean).join(', ');
+      return `<tr onclick="closeModal('modal-stat-list');openDetail('${c.id}')" style="cursor:pointer"><td><code style="font-size:12px;background:var(--surface);padding:2px 7px;border-radius:4px">${escapeHTML(c.nomorberkas)}</code></td><td><span class="badge ${c.jenis==='cacat'?'badge-admin':'badge-court'}">${c.jenis==='cacat'?'Cacat Adm.':'Putusan PN'}</span></td><td style="font-size:12px">${escapeHTML(c.kantah)}</td><td style="font-size:12px">${escapeHTML(c.pemohon)}</td><td style="font-size:12px">${escapeHTML(domisili||'-')}</td><td style="font-size:12px">${fmtDate(c.tglUsulan)}</td><td><span class="status-badge ${STATUS_MAP[c.currentStep]?.cls||'status-0'}">${STATUS_MAP[c.currentStep]?.label||'-'}</span></td></tr>`;
+    }).join('')}</tbody></table></div>`;
+  }
+  openModal('modal-stat-list');
+}
+
 function renderAlur() { const steps1 = TAHAPAN_LABELS.map((label, i) => `<div class="step-item"><div class="step-num done">${i+1}</div><div class="step-content"><div class="step-title">${label}</div></div></div>`).join(''); document.getElementById('stepper-alur').innerHTML = steps1; document.getElementById('stepper-alur-2').innerHTML = steps1; }
 
 // ══════════════════════════════════════════════════════════
