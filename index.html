@@ -494,8 +494,23 @@ function navigateTo(page, param) {
 }
 
 function updateStats() {
-  document.getElementById('stat-total').textContent = cases.length; document.getElementById('stat-cacat').textContent = cases.filter(c=>c.jenis==='cacat').length;
-  document.getElementById('stat-putusan').textContent = cases.filter(c=>c.jenis==='putusan').length; document.getElementById('stat-selesai').textContent = cases.filter(c=>c.currentStep>=5||c.isClosed).length;
+  // 1. Hitung jumlah masing-masing jenis berkas
+  const jumlahCacat = cases.filter(c => c.jenis === 'cacat').length;
+  const jumlahPutusan = cases.filter(c => c.jenis === 'putusan').length;
+  const jumlahSelesai = cases.filter(c => c.currentStep >= 5 || c.isClosed).length;
+
+  // 2. Update angka di kartu Dashboard utama
+  document.getElementById('stat-total').textContent = cases.length; 
+  document.getElementById('stat-cacat').textContent = jumlahCacat;
+  document.getElementById('stat-putusan').textContent = jumlahPutusan; 
+  document.getElementById('stat-selesai').textContent = jumlahSelesai;
+
+  // 3. Update angka di badge sidebar menu
+  const badgeCacat = document.getElementById('badge-cacat');
+  if (badgeCacat) badgeCacat.textContent = jumlahCacat;
+  
+  const badgePutusan = document.getElementById('badge-putusan');
+  if (badgePutusan) badgePutusan.textContent = jumlahPutusan;
 }
 
 let kantahChartInstance = null; let typeChartInstance = null;
