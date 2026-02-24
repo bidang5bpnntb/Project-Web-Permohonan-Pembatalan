@@ -55,11 +55,7 @@
   .pipeline { display: flex; gap: 4px; align-items: center; flex-wrap: nowrap; overflow: hidden; } .pipe-step { flex: 1; height: 4px; background: var(--border); border-radius: 2px; position: relative; min-width: 0; } .pipe-step.done { background: var(--black); } .pipe-step.active { background: var(--gray-dark); }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; } .form-grid.full { grid-template-columns: 1fr; } .form-group { display: flex; flex-direction: column; gap: 6px; } .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; } .form-control { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; } .form-control:focus { border-color: var(--black); box-shadow: 0 0 0 3px rgba(5,5,5,0.06); } .form-control:disabled { background: var(--surface); cursor: not-allowed; opacity: 0.7; }
   
-  .search-row { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; } 
-  .search-box { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 14px; background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; } 
-  .search-box:focus-within { border-color: var(--black); box-shadow: 0 0 0 3px rgba(5,5,5,0.06); } 
-  .search-box input { border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: none; width: 100%; padding: 10px 0; } 
-  .search-box input:focus-visible, .search-box input:focus { outline: none !important; box-shadow: none !important; }
+  .search-row { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; } .search-box { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 14px; background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; } .search-box:focus-within { border-color: var(--black); box-shadow: 0 0 0 3px rgba(5,5,5,0.06); } .search-box input { border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: none; width: 100%; padding: 10px 0; } .search-box input:focus-visible, .search-box input:focus { outline: none !important; box-shadow: none !important; }
   .filter-select { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); outline: none; cursor: pointer; }
   
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; cursor: pointer; border: none; outline: none; transition: all 0.2s; white-space: nowrap; } .btn-primary { background: var(--black); color: var(--white); } .btn-primary:hover { background: var(--gray-dark); } .btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--border); } .btn-secondary:hover { border-color: var(--gray-dark); } .btn-ghost { background: none; color: var(--text-muted); border: none; } .btn-ghost:hover { color: var(--text); } .btn-sm { padding: 7px 14px; font-size: 12px; } .btn-danger { background: #FFF5F5; color: #C0392B; border: 1px solid #FFD0CC; } .btn-danger:hover { background: #FFE8E5; } .btn-full { width: 100%; } .divider { height: 1px; background: var(--border); margin: 24px 0; }
@@ -195,13 +191,13 @@
       <div class="page" id="page-list-cacat">
         <div class="page-header"><h1>Cacat <em>Administrasi</em></h1><p>Daftar permohonan pembatalan berdasarkan cacat administrasi</p></div>
         <div class="search-row" style="justify-content: flex-end;"><select class="filter-select" id="filter-status-cacat" onchange="renderTable('cacat')"><option value="">Semua Tahapan</option><option value="0">Usulan Masuk</option><option value="1">Telaah Staff</option><option value="2">Penelitian Lapang</option><option value="3">Gelar Kasus</option><option value="4">Penerbitan SK</option><option value="5">Selesai / Ditutup</option></select></div>
-        <div class="card"><div class="scrollable"><table class="data-table"><thead><tr><th>No. Berkas</th><th>Kantah</th><th>Pemohon</th><th>No. Sertipikat</th><th>Desa/Kecamatan</th><th>Tgl. Usulan</th><th>Status</th><th>Progress</th><th>Aksi</th></tr></thead><tbody id="tbody-cacat"></tbody></table></div></div>
+        <div class="card"><div class="scrollable"><table class="data-table"><thead><tr><th>No. Registrasi</th><th>Kantah</th><th>Pemohon</th><th>No. Surat</th><th>Desa/Kecamatan</th><th>Tgl. Usulan</th><th>Status</th><th>Progress</th><th>Aksi</th></tr></thead><tbody id="tbody-cacat"></tbody></table></div></div>
       </div>
 
       <div class="page" id="page-list-putusan">
         <div class="page-header"><h1>Putusan <em>Pengadilan</em></h1><p>Daftar permohonan pembatalan berdasarkan putusan pengadilan inkracht</p></div>
         <div class="search-row" style="justify-content: flex-end;"><select class="filter-select" id="filter-status-putusan" onchange="renderTable('putusan')"><option value="">Semua Tahapan</option><option value="0">Usulan Masuk</option><option value="1">Telaah Staff</option><option value="2">Penelitian Lapang</option><option value="3">Gelar Kasus</option><option value="4">Penerbitan SK</option><option value="5">Selesai / Ditutup</option></select></div>
-        <div class="card"><div class="scrollable"><table class="data-table"><thead><tr><th>No. Berkas</th><th>Kantah</th><th>Pemohon</th><th>No. Putusan</th><th>Desa/Kecamatan</th><th>Tgl. Usulan</th><th>Status</th><th>Progress</th><th>Aksi</th></tr></thead><tbody id="tbody-putusan"></tbody></table></div></div>
+        <div class="card"><div class="scrollable"><table class="data-table"><thead><tr><th>No. Registrasi</th><th>Kantah</th><th>Pemohon</th><th>No. Surat</th><th>Desa/Kecamatan</th><th>Tgl. Usulan</th><th>Status</th><th>Progress</th><th>Aksi</th></tr></thead><tbody id="tbody-putusan"></tbody></table></div></div>
       </div>
 
       <div class="page" id="page-tambah">
@@ -213,10 +209,17 @@
             <form id="form-permohonan" onsubmit="submitForm(event)">
               <div id="form-tab-info">
                 <div class="form-grid">
-                  <div class="form-group"><label>Nomor Berkas *</label><input type="text" class="form-control" id="f-nomorberkas" placeholder="BPN-NTB/CA/2025/001" required></div>
-                  <div class="form-group"><label>Jenis *</label><select class="form-control" id="f-jenis" required><option value="">-- Pilih --</option><option value="cacat">Cacat Administrasi</option><option value="putusan">Putusan Pengadilan</option></select></div>
-                  <div class="form-group"><label>Kantor Pertanahan *</label><select class="form-control" id="f-kantah" required><option value="">-- Pilih --</option><option>Kota Mataram</option><option>Lombok Barat</option><option>Lombok Tengah</option><option>Lombok Timur</option><option>Lombok Utara</option><option>Sumbawa</option><option>Sumbawa Barat</option><option>Dompu</option><option>Bima</option><option>Kota Bima</option></select></div>
+                  <div class="form-group full">
+                      <label>Nomor Registrasi Sistem *</label>
+                      <input type="text" class="form-control" id="f-nomorberkas" placeholder="(Dibuat otomatis setelah Anda menekan Simpan)" disabled style="background-color: var(--surface); cursor: not-allowed; font-weight: bold; color: var(--text-muted);">
+                  </div>
+                  
+                  <div class="form-group"><label>Nomor Surat Usulan Kantah *</label><input type="text" class="form-control" id="f-nosurat" placeholder="Ketik nomor surat fisik..." required></div>
                   <div class="form-group"><label>Tanggal Surat *</label><input type="date" class="form-control" id="f-tglUsulan" required></div>
+                  
+                  <div class="form-group"><label>Jenis *</label><select class="form-control" id="f-jenis" required><option value="">-- Pilih --</option><option value="cacat">Cacat Administrasi</option><option value="putusan">Putusan Pengadilan</option></select></div>
+                  <div class="form-group"><label>Kantor Pertanahan *</label><select class="form-control" id="f-kantah" required><option value="">-- Pilih --</option><option>Kantor Wilayah</option><option>Kota Mataram</option><option>Lombok Barat</option><option>Lombok Tengah</option><option>Lombok Timur</option><option>Lombok Utara</option><option>Sumbawa</option><option>Sumbawa Barat</option><option>Dompu</option><option>Bima</option><option>Kota Bima</option></select></div>
+                  
                   <div class="form-group"><label>Nama Pemohon *</label><input type="text" class="form-control" id="f-pemohon" required></div>
                   
                   <div class="form-group">
@@ -224,8 +227,8 @@
                     <select class="form-control" id="f-pj" required></select>
                   </div>
                   
-                  <div class="form-group full form-grid" style="grid-template-columns:1fr 1fr"><div class="form-group" id="f-noputs-group" style="display:none"><label>Nomor Putusan</label><input type="text" class="form-control" id="f-noputs"></div></div>
-                  <div class="form-group full"><label>Upload Dokumen Usulan (PDF)</label><input type="file" class="form-control" id="f-dokumenusulan" accept="application/pdf" style="padding:10px;"></div>
+                  <div class="form-group full form-grid" style="grid-template-columns:1fr 1fr"><div class="form-group" id="f-noputs-group" style="display:none"><label>Nomor Putusan Pengadilan</label><input type="text" class="form-control" id="f-noputs"></div></div>
+                  <div class="form-group full"><label>Upload Dokumen Surat Usulan (PDF)</label><input type="file" class="form-control" id="f-dokumenusulan" accept="application/pdf" style="padding:10px;"></div>
                 </div>
               </div>
               <div id="form-tab-detail" style="display:none">
@@ -323,6 +326,20 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="modal-success-generate">
+  <div class="modal" style="max-width: 400px; text-align: center; padding: 32px 24px;">
+    <div style="width: 64px; height: 64px; background: #E8F5E9; color: #1B5E20; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+      <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="3" fill="none"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h2 style="font-family: 'DM Serif Display', serif; font-size: 24px; margin-bottom: 8px;">Berhasil Disimpan!</h2>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; line-height:1.6;">Silakan catat Nomor Registrasi Sistem berikut pada map fisik berkas Anda:</p>
+    <div style="background: var(--surface); border: 2px dashed var(--black); padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+      <span id="success-no" style="font-size: 20px; font-weight: 700; color: var(--black); letter-spacing: 1px;"></span>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="closeSuccessModal()">Tutup & Kembali ke Daftar</button>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-agenda">
   <div class="modal">
     <div class="modal-header"><div class="modal-title" id="modal-agenda-title"></div><button class="modal-close" onclick="closeModal('modal-agenda')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
@@ -338,7 +355,7 @@
 
 <script>
 // ══════════════════════════════════════════════════════════
-// 1. DATA MASTER WILAYAH (LENGKAP 100%)
+// 1. DATA MASTER WILAYAH
 // ══════════════════════════════════════════════════════════
 const rawNTB = {
   "Kota Mataram": { "Ampenan": "Ampenan Selatan,Ampenan Tengah,Ampenan Utara,Banjar,Bintaro,Dayan Peken,Kebun Sari,Pande Besi,Pejeruk,Taman Sari", "Cakranegara": "Cakranegara Barat,Cakranegara Selatan,Cakranegara Selatan Baru,Cakranegara Timur,Cakranegara Utara,Cakra Barat,Karang Taliwang,Mayura,Sayang-sayang,Taliwang", "Mataram": "Mataram Timur,Pageangan,Pejanggik,Punia,Pagutan,Pagutan Barat,Pagutan Timur", "Sandubaya": "Abian Tubuh Baru,Babakan,Dasan Cermen,Mandalika,Selagalas,Turida,Bertais", "Sekarbela": "Jempong Baru,Karang Pule,Kekalik Jaya,Tanjung Karang,Tanjung Karang Permai", "Selaparang": "Dasan Agung,Dasan Agung Baru,Gomong,Karang Baru,Mataram Barat,Monjok,Monjok Barat,Monjok Timur,Rembiga" },
@@ -357,8 +374,16 @@ function initWilayah() { const k = document.getElementById('f-kabupaten'); if(!k
 function handleKabupatenChange() { const k = document.getElementById('f-kabupaten').value, c = document.getElementById('f-kecamatan'), d = document.getElementById('f-desa'); c.innerHTML='<option value="">-- Pilih Kecamatan --</option>'; d.innerHTML='<option value="">-- Pilih Desa/Kelurahan --</option>'; d.disabled=true; if(k&&ntbData[k]){ c.disabled=false; Object.keys(ntbData[k]).sort().forEach(kec => c.add(new Option(kec, kec))); } else c.disabled=true; }
 function handleKecamatanChange() { const k = document.getElementById('f-kabupaten').value, c = document.getElementById('f-kecamatan').value, d = document.getElementById('f-desa'); d.innerHTML='<option value="">-- Pilih Desa/Kelurahan --</option>'; if(k&&c&&ntbData[k][c]){ d.disabled=false; ntbData[k][c].forEach(desa => d.add(new Option(desa, desa))); d.add(new Option("Lainnya...","Lainnya"));} else d.disabled=true; }
 
+// MAPPING KODE KANTAH UNTUK PENOMORAN
+const KODE_KANTAH_MAP = {
+  "Lombok Barat": "LOBAR", "Lombok Timur": "LOTIM", "Lombok Tengah": "LOTENG",
+  "Kota Mataram": "MTR", "Lombok Utara": "KLU", "Kantor Wilayah": "KANWIL",
+  "Sumbawa Barat": "KSB", "Sumbawa": "SMBW", "Dompu": "DMPU",
+  "Bima": "KABI", "Kota Bima": "KOBI"
+};
+
 // ══════════════════════════════════════════════════════════
-// 2. OTENTIKASI (HANYA ADMIN) & PENGATURAN
+// 2. OTENTIKASI & PENGATURAN PROFIL
 // ══════════════════════════════════════════════════════════
 function checkLogin() {
   const isLog = localStorage.getItem('sipentas-logged-in') === 'true';
@@ -479,14 +504,14 @@ function renderTable(type) {
   if (!fil.length) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:#999;padding:30px">Tidak ada data</td></tr>`; return; }
   tbody.innerHTML = fil.map(c => {
     let prog = c.isClosed ? 100 : Math.round((c.currentStep/5)*100);
-    return `<tr onclick="openDetail('${c.id}')"><td><code>${c.nomorberkas}</code></td><td>${c.kantah}</td><td>${c.pemohon}</td><td>${type==='putusan'?c.noputs||'-':c.nosert||'-'}</td><td>${c.desa||'-'}</td><td>${fmtDate(c.tglUsulan)}</td><td><span class="status-badge ${c.isClosed?'':STATUS_MAP[c.currentStep]?.cls}">${c.isClosed?'🔒 Ditutup':STATUS_MAP[c.currentStep]?.label}</span></td><td>${prog}%</td><td onclick="event.stopPropagation()"><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="openDetail('${c.id}')">Detail</button><button class="btn btn-danger btn-sm" onclick="deleteCase('${c.id}')">Hapus</button></div></td></tr>`;
+    return `<tr onclick="openDetail('${c.id}')"><td><code>${c.nomorberkas}</code></td><td>${c.kantah}</td><td>${c.pemohon}</td><td>${c.nosurat||'-'}</td><td>${c.desa||'-'}</td><td>${fmtDate(c.tglUsulan)}</td><td><span class="status-badge ${c.isClosed?'':STATUS_MAP[c.currentStep]?.cls}">${c.isClosed?'🔒 Ditutup':STATUS_MAP[c.currentStep]?.label}</span></td><td>${prog}%</td><td onclick="event.stopPropagation()"><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="openDetail('${c.id}')">Detail</button><button class="btn btn-danger btn-sm" onclick="deleteCase('${c.id}')">Hapus</button></div></td></tr>`;
   }).join('');
 }
 
 // ══════════════════════════════════════════════════════════
-// 6. FORM TAMBAH, UPDATE TAHAPAN, & TUTUP BERKAS
+// 6. FORM TAMBAH, AUTO-GENERATE NOMOR BERKAS
 // ══════════════════════════════════════════════════════════
-const DUMMY_OPERATORS = ['Budi Santoso', 'Siti Aminah', 'Ahmad Fauzi', 'Rini Sulistyowati'];
+const DUMMY_OPERATORS = ['Budi Santoso', 'Siti Aminah', 'Ahmad Fauzi', 'Rini Sulistyowati', 'Reza Pramana'];
 
 let currentFormTab = 'info'; const formTabs = ['info', 'detail']; 
 function switchFormTab(tab) { formTabs.forEach(t => document.getElementById('form-tab-'+t).style.display = t===tab?'':'none'); document.querySelectorAll('.tabs .tab').forEach((b,i)=>b.classList.toggle('active',formTabs[i]===tab)); currentFormTab=tab; document.getElementById('btn-prev-tab').style.display=tab==='info'?'none':''; document.getElementById('btn-next-tab').style.display=tab==='detail'?'none':''; document.getElementById('btn-submit').style.display=tab==='detail'?'':'none'; }
@@ -497,30 +522,61 @@ function resetForm(preselect) {
   switchFormTab('info'); togglePutsanField(); document.getElementById('f-jenis').addEventListener('change', togglePutsanField); 
   initWilayah(); 
   
-  // POPULASI DROPDOWN PJ BERKAS
   const pjInput = document.getElementById('f-pj');
   pjInput.innerHTML = '<option value="">-- Pilih Penanggung Jawab --</option>' + DUMMY_OPERATORS.map(n => `<option value="${n}">${n}</option>`).join('');
 }
+
 function togglePutsanField() { document.getElementById('f-noputs-group').style.display = document.getElementById('f-jenis').value === 'putusan' ? 'block' : 'none'; }
+
+// LOGIKA GENERATE NOMOR BERKAS [NO_URUT]/[KODE_JENIS]/[KODE_KANTAH]/[BULAN]/[TAHUN]
+function generateNomorBerkas(jenis, kantah) {
+    const date = new Date();
+    const tahun = date.getFullYear();
+    const bulan = String(date.getMonth() + 1).padStart(2, '0');
+    
+    const kodeJenis = jenis === 'cacat' ? 'CA' : 'PP';
+    const kodeKantah = KODE_KANTAH_MAP[kantah] || 'XXX';
+    
+    // Cari urutan tahun ini
+    const kasusTahunIni = cases.filter(c => c.createdAt && c.createdAt.startsWith(tahun.toString()));
+    const noUrut = String(kasusTahunIni.length + 1).padStart(3, '0');
+
+    return `${noUrut}/${kodeJenis}/${kodeKantah}/${bulan}/${tahun}`;
+}
 
 async function submitForm(e) { 
   e.preventDefault(); const j = document.getElementById('f-jenis').value; 
+  const k = document.getElementById('f-kantah').value;
+  if (!j) { showToast('Pilih jenis permohonan!', 'error'); return; } 
+
   let uD = { file: null, name: '' }, bD = { file: null, name: '' };
   const uI = document.getElementById('f-dokumenusulan'), bI = document.getElementById('f-dokumenbt');
   if(uI.files[0]) { uD.file = await readFileAsBase64(uI.files[0]); uD.name = uI.files[0].name; }
   if(bI.files[0]) { bD.file = await readFileAsBase64(bI.files[0]); bD.name = bI.files[0].name; }
 
+  const autoNo = generateNomorBerkas(j, k);
   const newId = 'c' + Date.now();
+  
   cases.push({ 
-    id: newId, nomorberkas: document.getElementById('f-nomorberkas').value, jenis: j, kantah: document.getElementById('f-kantah').value, 
+    id: newId, nomorberkas: autoNo, nosurat: document.getElementById('f-nosurat').value, jenis: j, kantah: k, 
     tglUsulan: document.getElementById('f-tglUsulan').value, pemohon: document.getElementById('f-pemohon').value, kontak: document.getElementById('f-kontak').value, pj: document.getElementById('f-pj').value, 
     noputs: document.getElementById('f-noputs').value, dokumenUsulan: uD, pemeganghak: document.getElementById('f-pemeganghak').value, jenissert: document.getElementById('f-jenissert').value, nosert: document.getElementById('f-nosert').value, 
     luas: document.getElementById('f-luas').value, kabupaten: document.getElementById('f-kabupaten').value, kecamatan: document.getElementById('f-kecamatan').value, desa: document.getElementById('f-desa').value, dokumenbt: bD, uraian: document.getElementById('f-uraian').value, 
-    tahapan: Array(6).fill({date:'',note:'',file:null,fileName:''}), currentStep: 0, isClosed: false, auditTrail: [] 
+    tahapan: Array(6).fill({date:'',note:'',file:null,fileName:''}), currentStep: 0, isClosed: false, auditTrail: [], createdAt: new Date().toISOString() 
   }); 
 
-  logActivity(newId, `Mendaftarkan usulan permohonan baru.`);
-  saveData(); updateStats(); showToast('Tersimpan!', 'success'); navigateTo(j==='cacat'?'list-cacat':'list-putusan'); 
+  logActivity(newId, `Mendaftarkan usulan permohonan. No. Sistem: ${autoNo}`);
+  saveData(); updateStats(); renderCharts();
+  
+  // Tampilkan Pop-up Sukses dengan Nomor Registrasi
+  document.getElementById('success-no').textContent = autoNo;
+  openModal('modal-success-generate');
+}
+
+function closeSuccessModal() {
+    closeModal('modal-success-generate');
+    const j = document.getElementById('f-jenis').value;
+    navigateTo(j === 'cacat' ? 'list-cacat' : 'list-putusan');
 }
 
 let updId='', updIdx=0;
@@ -568,8 +624,8 @@ function openDetail(id) {
   document.getElementById('detail-content').innerHTML = `
     <div style="display:flex; justify-content:space-between; margin-bottom:16px;"><b>Opsi Admin</b>${adminActions}</div>
     ${c.isClosed ? `<div style="background:#FFF5F5; color:#C0392B; padding:16px; border-radius:8px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;"><div><b>🔒 BERKAS DITUTUP</b><br>Alasan: ${escapeHTML(c.closeReason)}</div><button class="btn btn-danger btn-sm" onclick="viewDocument('${id}','tutup')">Lihat Surat</button></div>` : ''}
-    <div class="detail-header"><div class="detail-case-id">ID BERKAS: ${c.id}</div><div class="detail-title">${escapeHTML(c.nomorberkas)}</div>
-      <div class="detail-metas"><div class="detail-meta-item"><strong>Pemohon:</strong>${escapeHTML(c.pemohon)}</div><div class="detail-meta-item"><strong>PJ:</strong>${escapeHTML(c.pj)}</div><div class="detail-meta-item"><strong>Kantah:</strong>${escapeHTML(c.kantah)}</div></div>
+    <div class="detail-header"><div class="detail-case-id">ID SISTEM: ${c.id}</div><div class="detail-title">${escapeHTML(c.nomorberkas)}</div>
+      <div class="detail-metas"><div class="detail-meta-item"><strong>No Surat Kantah:</strong>${escapeHTML(c.nosurat||'-')}</div><div class="detail-meta-item"><strong>Pemohon:</strong>${escapeHTML(c.pemohon)}</div><div class="detail-meta-item"><strong>PJ:</strong>${escapeHTML(c.pj)}</div><div class="detail-meta-item"><strong>Kantah:</strong>${escapeHTML(c.kantah)}</div></div>
       <div style="margin-top:16px; display:flex; gap:8px;">
         ${c.dokumenUsulan?.file ? `<button class="btn btn-secondary btn-sm" onclick="viewDocument('${id}','usulan')">📄 Surat Usulan</button>` : ''}
         ${c.dokumenbt?.file ? `<button class="btn btn-secondary btn-sm" onclick="viewDocument('${id}','bt')">📄 Buku Tanah</button>` : ''}
@@ -598,7 +654,7 @@ function viewTahapan(id, idx) {
 }
 
 // ══════════════════════════════════════════════════════════
-// 8. KALENDER (POPUP KEGIATAN & TANDA HIJAU)
+// 8. KALENDER 
 // ══════════════════════════════════════════════════════════
 let miniCalDate = new Date(); let fullCalDate = new Date();
 function dateKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; } 
@@ -686,7 +742,7 @@ function deleteEvent(id) { calendarEvents = calendarEvents.filter(e => e.id !== 
 // 9. INISIALISASI
 // ══════════════════════════════════════════════════════════
 if (cases.length === 0) { 
-  cases = [ { id: 'c1', nomorberkas: 'BPN/001', jenis: 'cacat', kantah: 'Kota Mataram', tglUsulan: '2025-02-10', pemohon: 'H. Ahmad', pj: 'Siti Aminah', pemeganghak: 'H. Ahmad', luas: '250', kabupaten: 'Kota Mataram', kecamatan: 'Sekarbela', desa: 'Jempong Baru', tahapan: [{date:'2025-02-10', note:'Berkas dianalisa'}], currentStep: 1, isClosed: false, auditTrail: [{date: new Date().toISOString(), userName: 'System', userRole: 'INIT', action: 'Data disinkronisasi awal'}] } ]; 
+  cases = [ { id: 'c1', nomorberkas: '001/CA/MTR/02/2026', nosurat: '123/BPN/II/2026', jenis: 'cacat', kantah: 'Kota Mataram', tglUsulan: '2026-02-10', pemohon: 'H. Ahmad', pj: 'Siti Aminah', pemeganghak: 'H. Ahmad', luas: '250', kabupaten: 'Kota Mataram', kecamatan: 'Sekarbela', desa: 'Jempong Baru', tahapan: [{date:'2026-02-10', note:'Berkas dianalisa'}], currentStep: 1, isClosed: false, auditTrail: [{date: new Date().toISOString(), userName: 'System', userRole: 'INIT', action: 'Data disinkronisasi awal'}] } ]; 
   saveData(); 
 }
 
