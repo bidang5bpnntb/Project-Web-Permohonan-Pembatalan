@@ -210,7 +210,7 @@
           <div class="card-header"><span class="card-title">Formulir Permohonan</span></div>
           <div class="card-body">
             <div class="tabs" style="margin-bottom:24px"><button type="button" class="tab active" onclick="switchFormTab('info')">Informasi Umum</button><button type="button" class="tab" onclick="switchFormTab('detail')">Detail Objek</button></div>
-            <form id="form-permohonan" onsubmit="submitForm(event)">
+            <form id="form-permohonan">
               <div id="form-tab-info">
                 <div class="form-grid">
                   <div class="form-group full">
@@ -218,18 +218,18 @@
                       <input type="text" class="form-control" id="f-nomorberkas" placeholder="(Dibuat otomatis setelah Anda menekan Simpan)" disabled style="background-color: var(--surface); cursor: not-allowed; font-weight: bold; color: var(--text-muted);">
                   </div>
                   
-                  <div class="form-group"><label>Nomor Surat Usulan Kantah *</label><input type="text" class="form-control" id="f-nosurat" placeholder="Ketik nomor surat fisik..." required></div>
-                  <div class="form-group"><label>Tanggal Surat *</label><input type="date" class="form-control" id="f-tglUsulan" required></div>
+                  <div class="form-group"><label>Nomor Surat Usulan Kantah *</label><input type="text" class="form-control" id="f-nosurat" placeholder="Ketik nomor surat fisik..."></div>
+                  <div class="form-group"><label>Tanggal Surat *</label><input type="date" class="form-control" id="f-tglUsulan"></div>
                   
-                  <div class="form-group"><label>Jenis *</label><select class="form-control" id="f-jenis" required><option value="">-- Pilih --</option><option value="cacat">Cacat Administrasi</option><option value="putusan">Putusan Pengadilan</option></select></div>
-                  <div class="form-group"><label>Kantor Pertanahan *</label><select class="form-control" id="f-kantah" required><option value="">-- Pilih --</option><option>Kantor Wilayah</option><option>Kota Mataram</option><option>Lombok Barat</option><option>Lombok Tengah</option><option>Lombok Timur</option><option>Lombok Utara</option><option>Sumbawa</option><option>Sumbawa Barat</option><option>Dompu</option><option>Bima</option><option>Kota Bima</option></select></div>
+                  <div class="form-group"><label>Jenis *</label><select class="form-control" id="f-jenis"><option value="">-- Pilih --</option><option value="cacat">Cacat Administrasi</option><option value="putusan">Putusan Pengadilan</option></select></div>
+                  <div class="form-group"><label>Kantor Pertanahan *</label><select class="form-control" id="f-kantah"><option value="">-- Pilih --</option><option>Kantor Wilayah</option><option>Kota Mataram</option><option>Lombok Barat</option><option>Lombok Tengah</option><option>Lombok Timur</option><option>Lombok Utara</option><option>Sumbawa</option><option>Sumbawa Barat</option><option>Dompu</option><option>Bima</option><option>Kota Bima</option></select></div>
                   
-                  <div class="form-group"><label>Nama Pemohon *</label><input type="text" class="form-control" id="f-pemohon" required></div>
+                  <div class="form-group"><label>Nama Pemohon *</label><input type="text" class="form-control" id="f-pemohon"></div>
                   <div class="form-group"><label>Kontak Pemohon</label><input type="text" class="form-control" id="f-kontak" placeholder="08xxxxxxxx"></div>
                   
                   <div class="form-group">
                     <label>Penanggung Jawab Berkas *</label>
-                    <select class="form-control" id="f-pj" required></select>
+                    <select class="form-control" id="f-pj"></select>
                   </div>
                   
                   <div class="form-group full form-grid" style="grid-template-columns:1fr 1fr"><div class="form-group" id="f-noputs-group" style="display:none"><label>Nomor Putusan Pengadilan</label><input type="text" class="form-control" id="f-noputs"></div></div>
@@ -238,22 +238,35 @@
               </div>
               <div id="form-tab-detail" style="display:none">
                 <div class="form-grid">
-                  <div class="form-group full"><label>Nama Pemegang Hak *</label><input type="text" class="form-control" id="f-pemeganghak" required></div>
+                  <div class="form-group full"><label>Nama Pemegang Hak *</label><input type="text" class="form-control" id="f-pemeganghak"></div>
                   <div class="form-group"><label>Jenis Sertipikat</label><select class="form-control" id="f-jenissert"><option value="">-- Pilih --</option><option>Hak Milik</option><option>HGB</option><option>HGU</option><option>Hak Pakai</option><option>Hak Pengelolaan</option></select></div>
                   <div class="form-group"><label>No. Sertipikat</label><input type="text" class="form-control" id="f-nosert"></div>
                   <div class="form-group full"><label>Luas Tanah (m²)</label><input type="number" class="form-control" id="f-luas"></div>
                   
-                  <div class="form-group full" style="margin-top:10px;"><label>Lokasi / Wilayah Administrasi Objek</label></div>
-                  <div class="form-group full"><label>Kota / Kabupaten *</label><select class="form-control" id="f-kabupaten" onchange="handleKabupatenChange()" required></select></div>
-                  <div class="form-group"><label>Kecamatan *</label><select class="form-control" id="f-kecamatan" onchange="handleKecamatanChange()" disabled required></select></div>
-                  <div class="form-group"><label>Desa / Kelurahan *</label><select class="form-control" id="f-desa" disabled required></select></div>
+                  <div class="form-group full" style="margin-top: 16px; padding: 18px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-sm);">
+                    <label style="font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 16px; display: block;">📍 Lokasi / Wilayah Administrasi Objek</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                      <div class="form-group">
+                        <label>Kota / Kabupaten *</label>
+                        <select class="form-control" id="f-kabupaten" onchange="handleKabupatenChange()"></select>
+                      </div>
+                      <div class="form-group">
+                        <label>Kecamatan *</label>
+                        <select class="form-control" id="f-kecamatan" onchange="handleKecamatanChange()" disabled></select>
+                      </div>
+                      <div class="form-group">
+                        <label>Desa / Kelurahan *</label>
+                        <select class="form-control" id="f-desa" disabled></select>
+                      </div>
+                    </div>
+                  </div>
                   
                   <div class="form-group full" style="margin-top:10px;"><label>Upload Buku Tanah (PDF)</label><input type="file" class="form-control" id="f-dokumenbt" accept="application/pdf" style="padding:10px;"></div>
                   <div class="form-group full"><label>Uraian Kasus</label><textarea class="form-control" id="f-uraian" style="min-height:100px"></textarea></div>
                 </div>
               </div>
               <div class="divider"></div>
-              <div style="display:flex;gap:10px;justify-content:flex-end"><button type="button" class="btn btn-secondary" onclick="navigateTo('dashboard')">Batal</button><button type="button" class="btn btn-secondary" id="btn-prev-tab" style="display:none" onclick="prevFormTab()">Kembali</button><button type="button" class="btn btn-primary" id="btn-next-tab" onclick="nextFormTab()">Lanjut</button><button type="submit" class="btn btn-primary" id="btn-submit" style="display:none">Simpan Data</button></div>
+              <div style="display:flex;gap:10px;justify-content:flex-end"><button type="button" class="btn btn-secondary" onclick="navigateTo('dashboard')">Batal</button><button type="button" class="btn btn-secondary" id="btn-prev-tab" style="display:none" onclick="prevFormTab()">Kembali</button><button type="button" class="btn btn-primary" id="btn-next-tab" onclick="nextFormTab()">Lanjut</button><button type="button" class="btn btn-primary" id="btn-submit" style="display:none" onclick="submitForm(event)">Simpan Data</button></div>
             </form>
           </div>
         </div>
@@ -552,9 +565,31 @@ function generateNomorBerkas(jenis, kantah) {
 
 async function submitForm(e) { 
   e.preventDefault(); 
+  
+  // 1. Validasi Manual Antar Tab
+  const reqInfo = ['f-nosurat', 'f-tglUsulan', 'f-jenis', 'f-kantah', 'f-pemohon', 'f-pj'];
+  const reqDetail = ['f-pemeganghak', 'f-kabupaten', 'f-kecamatan', 'f-desa'];
+  
+  for (let id of reqInfo) {
+      if (!document.getElementById(id).value) {
+          switchFormTab('info'); // Pindah ke tab info otomatis
+          showToast('Harap lengkapi bagian Informasi Umum!', 'error');
+          document.getElementById(id).focus();
+          return;
+      }
+  }
+  for (let id of reqDetail) {
+      if (!document.getElementById(id).value) {
+          switchFormTab('detail'); // Pindah ke tab detail otomatis
+          showToast('Harap lengkapi bagian Detail Objek!', 'error');
+          document.getElementById(id).focus();
+          return;
+      }
+  }
+
+  // 2. Lanjutkan proses simpan jika semua valid
   const j = document.getElementById('f-jenis').value; 
   const k = document.getElementById('f-kantah').value;
-  if (!j || !k) { showToast('Pilih jenis permohonan dan Kantor Pertanahan!', 'error'); return; } 
 
   let uD = { file: null, name: '' }, bD = { file: null, name: '' };
   const uI = document.getElementById('f-dokumenusulan'), bI = document.getElementById('f-dokumenbt');
