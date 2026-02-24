@@ -56,7 +56,13 @@
   .status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; } .status-1 { background: #FFF8E1; color: #B7791F; } .status-2 { background: #E8F5E9; color: #2E7D32; } .status-3 { background: #E3F2FD; color: #1565C0; } .status-4 { background: #F3E5F5; color: #6A1B9A; } .status-5 { background: #E8F5E9; color: #1B5E20; } .status-0 { background: var(--surface); color: var(--text-muted); }
   .pipeline { display: flex; gap: 4px; align-items: center; flex-wrap: nowrap; overflow: hidden; } .pipe-step { flex: 1; height: 4px; background: var(--border); border-radius: 2px; position: relative; min-width: 0; } .pipe-step.done { background: var(--black); } .pipe-step.active { background: var(--gray-dark); }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; } .form-grid.full { grid-template-columns: 1fr; } .form-group { display: flex; flex-direction: column; gap: 6px; } .form-group label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; } .form-control { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%; } .form-control:focus { border-color: var(--black); box-shadow: 0 0 0 3px rgba(5,5,5,0.06); } .form-control:disabled { background: var(--surface); cursor: not-allowed; opacity: 0.7; }
-  .search-row { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; } .search-box { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 14px; background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; } .search-box:focus-within { border-color: var(--black); box-shadow: 0 0 0 3px rgba(5,5,5,0.06); } .search-box input { border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: none; width: 100%; padding: 10px 0; } .filter-select { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); outline: none; cursor: pointer; }
+  
+  .search-row { display: flex; gap: 12px; margin-bottom: 20px; align-items: center; flex-wrap: wrap; } .search-box { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 14px; background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; } .search-box:focus-within { border-color: var(--black); box-shadow: 0 0 0 3px rgba(5,5,5,0.06); } 
+  .search-box input { border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--text); background: none; width: 100%; padding: 10px 0; } 
+  /* FIX SEARCH BAR OUTLINE */
+  .search-box input:focus-visible, .search-box input:focus { outline: none !important; box-shadow: none !important; }
+  
+  .filter-select { padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); outline: none; cursor: pointer; }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 500; cursor: pointer; border: none; outline: none; transition: all 0.2s; white-space: nowrap; } .btn-primary { background: var(--black); color: var(--white); } .btn-primary:hover { background: var(--gray-dark); } .btn-secondary { background: var(--white); color: var(--text); border: 1px solid var(--border); } .btn-secondary:hover { border-color: var(--gray-dark); } .btn-ghost { background: none; color: var(--text-muted); border: none; } .btn-ghost:hover { color: var(--text); } .btn-sm { padding: 7px 14px; font-size: 12px; } .btn-danger { background: #FFF5F5; color: #C0392B; border: 1px solid #FFD0CC; } .btn-danger:hover { background: #FFE8E5; } .btn-full { width: 100%; } .divider { height: 1px; background: var(--border); margin: 24px 0; }
 
   /* DETAIL VIEW & AUDIT TRAIL */
@@ -65,7 +71,19 @@
   .audit-timeline { margin-top: 10px; } .audit-item { display: flex; gap: 14px; margin-bottom: 16px; position: relative; } .audit-item::before { content: ''; position: absolute; left: 6px; top: 20px; bottom: -16px; width: 1px; border-left: 1px dashed var(--border); } .audit-item:last-child::before { display: none; } .audit-dot { width: 13px; height: 13px; border-radius: 50%; background: var(--surface); border: 2px solid var(--gray-dark); flex-shrink: 0; margin-top: 4px; position: relative; z-index: 2; } .audit-content { flex: 1; background: var(--surface); padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); } .audit-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; } .audit-user { font-size: 13px; font-weight: 600; color: var(--text); } .audit-role { font-size: 10px; background: rgba(5,5,5,0.06); padding: 2px 6px; border-radius: 4px; margin-left: 6px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;} .audit-time { font-size: 11px; color: var(--text-muted); } .audit-action { font-size: 12px; color: var(--text-sub); line-height: 1.5; }
 
   /* CALENDAR */
-  .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; } .cal-month-label { font-family: 'DM Serif Display', serif; font-size: 18px; } .cal-nav-btns { display: flex; gap: 6px; } .cal-nav-btn { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text-muted); } .cal-nav-btn:hover { border-color: var(--black); color: var(--black); } .cal-nav-btn svg { width: 14px; height: 14px; } .cal-days-header { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 8px; } .cal-day-name { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); padding: 4px 0; } .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; } .cal-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; border-radius: var(--radius-sm); cursor: pointer; position: relative; transition: all 0.2s; color: var(--text-sub); flex-direction: column; gap: 2px; } .cal-cell:hover { background: var(--surface); } .cal-cell.other-month { color: var(--text-muted); opacity: 0.4; } .cal-cell.today { background: var(--black); color: var(--white) !important; font-weight: 700; } .cal-cell.holiday { color: #c0392b; font-weight: 600; } .cal-cell.has-event::after { content: ''; position: absolute; bottom: 4px; width: 4px; height: 4px; background: var(--black); border-radius: 50%; } .cal-cell.today.has-event::after { background: var(--white); } .cal-cell.holiday.has-event::after { background: #c0392b; } .cal-tooltip { position: absolute; background: var(--black); color: var(--white); padding: 6px 10px; border-radius: var(--radius-sm); font-size: 11px; white-space: nowrap; z-index: 20; pointer-events: none; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.2s; max-width: 200px; white-space: normal; text-align: center; } .cal-cell:hover .cal-tooltip { opacity: 1; }
+  .calendar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; } .cal-month-label { font-family: 'DM Serif Display', serif; font-size: 18px; } .cal-nav-btns { display: flex; gap: 6px; } .cal-nav-btn { width: 30px; height: 30px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text-muted); } .cal-nav-btn:hover { border-color: var(--black); color: var(--black); } .cal-nav-btn svg { width: 14px; height: 14px; } .cal-days-header { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 8px; } .cal-day-name { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); padding: 4px 0; } 
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; } 
+  .cal-cell { display: flex; align-items: center; justify-content: center; font-size: 12px; border-radius: var(--radius-sm); cursor: pointer; position: relative; transition: all 0.2s; color: var(--text-sub); flex-direction: column; gap: 2px; } 
+  .cal-cell:hover { background: var(--surface); } 
+  .cal-cell.other-month { color: var(--text-muted); opacity: 0.4; } 
+  .cal-cell.today { background: var(--black); color: var(--white) !important; font-weight: 700; } 
+  .cal-cell.holiday { color: #c0392b; font-weight: 600; } 
+  
+  /* HIGHLIGHT EVENT DI KALENDER MINI */
+  .cal-cell.has-event { background: #E8F5E9; color: #1B5E20; font-weight: 700; border: 1px solid #C8E6C9; }
+  .cal-cell.today.has-event { background: var(--black); color: var(--white) !important; border-color: var(--black); }
+  .cal-cell.has-event::after { content: ''; position: absolute; bottom: 4px; width: 6px; height: 6px; background: #1B5E20; border-radius: 50%; } 
+  .cal-cell.today.has-event::after { background: #1B5E20; border: 1px solid white; } 
 
   /* MODALS & UTILS */
   .modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(5,5,5,0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; } .modal-overlay.open { opacity: 1; pointer-events: all; } .modal { background: var(--white); border-radius: var(--radius); width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 80px rgba(5,5,5,0.2); transform: translateY(20px) scale(0.97); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); } .modal-overlay.open .modal { transform: none; } .modal-header { padding: 22px 24px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--white); z-index: 1; } .modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; } .modal-close { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; } .modal-close:hover { background: var(--surface); } .modal-close svg { width: 14px; height: 14px; } .modal-body { padding: 24px; } .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
@@ -167,7 +185,7 @@
           <div style="display:flex;flex-direction:column;gap:20px">
             <div class="card">
               <div class="card-header"><span class="card-title">Kalender Mini</span><button class="card-action" onclick="navigateTo('kalender')">Detail</button></div>
-              <div class="card-body" style="padding:16px"><div class="calendar-header"><div class="cal-month-label" id="mini-cal-label"></div><div class="cal-nav-btns"><button class="cal-nav-btn" onclick="miniCalPrev()">❮</button><button class="cal-nav-btn" onclick="miniCalNext()">❯</button></div></div><div class="cal-days-header"><div class="cal-day-name">Min</div><div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div><div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div><div class="cal-day-name">Jum</div><div class="cal-day-name">Sab</div></div><div class="cal-grid" id="mini-cal-grid"></div></div>
+              <div class="card-body" style="padding:16px"><div class="calendar-header"><div class="cal-month-label" id="mini-cal-label"></div><div class="cal-nav-btns"><button class="cal-nav-btn" onclick="miniCalPrev()">❮</button><button class="cal-nav-btn" onclick="miniCalNext()">❯</button></div></div><div class="cal-days-header"><div class="cal-day-name">Min</div><div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div><div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div><div class="cal-day-name">Jum</div><div class="cal-day-name">Sab</div></div><div class="cal-grid" id="mini-cal-grid" style="aspect-ratio: 1.2;"></div></div>
             </div>
           </div>
         </div>
@@ -194,13 +212,19 @@
             <form id="form-permohonan" onsubmit="submitForm(event)">
               <div id="form-tab-info">
                 <div class="form-grid">
-                  <div class="form-group"><label>Nomor Berkas *</label><input type="text" class="form-control" id="f-nomorberkas" required></div>
+                  <div class="form-group"><label>Nomor Berkas *</label><input type="text" class="form-control" id="f-nomorberkas" placeholder="BPN-NTB/CA/2025/001" required></div>
                   <div class="form-group"><label>Jenis *</label><select class="form-control" id="f-jenis" required><option value="">-- Pilih --</option><option value="cacat">Cacat Administrasi</option><option value="putusan">Putusan Pengadilan</option></select></div>
                   <div class="form-group"><label>Kantor Pertanahan *</label><select class="form-control" id="f-kantah" required><option value="">-- Pilih --</option><option>Kota Mataram</option><option>Lombok Barat</option><option>Lombok Tengah</option><option>Lombok Timur</option><option>Lombok Utara</option><option>Sumbawa</option><option>Sumbawa Barat</option><option>Dompu</option><option>Bima</option><option>Kota Bima</option></select></div>
                   <div class="form-group"><label>Tanggal Surat *</label><input type="date" class="form-control" id="f-tglUsulan" required></div>
                   <div class="form-group"><label>Nama Pemohon *</label><input type="text" class="form-control" id="f-pemohon" required></div>
-                  <div class="form-group"><label>Penanggung Jawab Berkas *</label><input type="text" class="form-control" id="f-pj" required><small style="color:var(--text-muted); margin-top:4px; font-size:11px;" id="f-pj-help"></small></div>
-                  <div class="form-group full" id="f-noputs-group" style="display:none"><label>Nomor Putusan</label><input type="text" class="form-control" id="f-noputs"></div>
+                  
+                  <div class="form-group">
+                    <label>Penanggung Jawab Berkas *</label>
+                    <select class="form-control" id="f-pj" required></select>
+                    <small style="color:var(--text-muted); margin-top:4px; font-size:11px;" id="f-pj-help"></small>
+                  </div>
+                  
+                  <div class="form-group full form-grid" style="grid-template-columns:1fr 1fr"><div class="form-group" id="f-noputs-group" style="display:none"><label>Nomor Putusan</label><input type="text" class="form-control" id="f-noputs"></div></div>
                   <div class="form-group full"><label>Upload Dokumen Usulan (PDF)</label><input type="file" class="form-control" id="f-dokumenusulan" accept="application/pdf" style="padding:10px;"></div>
                 </div>
               </div>
@@ -210,15 +234,18 @@
                   <div class="form-group"><label>Jenis Sertipikat</label><select class="form-control" id="f-jenissert"><option value="">-- Pilih --</option><option>Hak Milik</option><option>HGB</option><option>HGU</option><option>Hak Pakai</option><option>Hak Pengelolaan</option></select></div>
                   <div class="form-group"><label>No. Sertipikat</label><input type="text" class="form-control" id="f-nosert"></div>
                   <div class="form-group full"><label>Luas Tanah (m²)</label><input type="number" class="form-control" id="f-luas"></div>
+                  
+                  <div class="form-group full" style="margin-top:10px;"><label>Lokasi / Wilayah Administrasi Objek</label></div>
                   <div class="form-group full"><label>Kota / Kabupaten *</label><select class="form-control" id="f-kabupaten" onchange="handleKabupatenChange()" required></select></div>
                   <div class="form-group"><label>Kecamatan *</label><select class="form-control" id="f-kecamatan" onchange="handleKecamatanChange()" disabled required></select></div>
                   <div class="form-group"><label>Desa / Kelurahan *</label><select class="form-control" id="f-desa" disabled required></select></div>
-                  <div class="form-group full"><label>Upload Buku Tanah (PDF)</label><input type="file" class="form-control" id="f-dokumenbt" accept="application/pdf" style="padding:10px;"></div>
+                  
+                  <div class="form-group full" style="margin-top:10px;"><label>Upload Buku Tanah (PDF)</label><input type="file" class="form-control" id="f-dokumenbt" accept="application/pdf" style="padding:10px;"></div>
                   <div class="form-group full"><label>Uraian Kasus</label><textarea class="form-control" id="f-uraian" style="min-height:100px"></textarea></div>
                 </div>
               </div>
               <div class="divider"></div>
-              <div style="display:flex;gap:10px;justify-content:flex-end"><button type="button" class="btn btn-secondary" onclick="navigateTo('dashboard')">Batal</button><button type="button" class="btn btn-secondary" id="btn-prev-tab" style="display:none" onclick="prevFormTab()">Kembali</button><button type="button" class="btn btn-primary" id="btn-next-tab" onclick="nextFormTab()">Lanjut</button><button type="submit" class="btn btn-primary" id="btn-submit" style="display:none">Simpan</button></div>
+              <div style="display:flex;gap:10px;justify-content:flex-end"><button type="button" class="btn btn-secondary" onclick="navigateTo('dashboard')">Batal</button><button type="button" class="btn btn-secondary" id="btn-prev-tab" style="display:none" onclick="prevFormTab()">Kembali</button><button type="button" class="btn btn-primary" id="btn-next-tab" onclick="nextFormTab()">Lanjut</button><button type="submit" class="btn btn-primary" id="btn-submit" style="display:none">Simpan Data</button></div>
             </form>
           </div>
         </div>
@@ -231,21 +258,11 @@
 
       <div class="page" id="page-kalender">
         <div class="page-header"><h1>Kalender <em>Kegiatan</em></h1></div>
-        <div style="display:grid;grid-template-columns:1fr 300px;gap:24px">
-          <div class="card">
-            <div class="card-header"><div style="display:flex;align-items:center;gap:16px"><span class="cal-month-label" id="full-cal-label"></span><div class="cal-nav-btns"><button class="cal-nav-btn" onclick="fullCalPrev()">❮</button><button class="cal-nav-btn" onclick="fullCalToday()">Hari Ini</button><button class="cal-nav-btn" onclick="fullCalNext()">❯</button></div></div></div>
-            <div class="card-body"><div class="cal-days-header"><div class="cal-day-name" style="color:#c0392b">Min</div><div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div><div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div><div class="cal-day-name">Jum</div><div class="cal-day-name">Sab</div></div><div class="cal-grid" id="full-cal-grid"></div></div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:16px" id="cal-add-panel">
-            <div class="card">
-              <div class="card-header"><span class="card-title">Tambah Kegiatan</span></div>
-              <div class="card-body">
-                <div class="form-group" style="margin-bottom:12px"><label>Tanggal</label><input type="date" class="form-control" id="new-event-date"></div>
-                <div class="form-group" style="margin-bottom:12px"><label>Judul Kegiatan</label><input type="text" class="form-control" id="new-event-title"></div>
-                <div class="form-group" style="margin-bottom:12px"><label>Berkas Terkait</label><select class="form-control" id="new-event-berkas"></select></div>
-                <button class="btn btn-primary" style="width:100%" onclick="addCalendarEvent()">Simpan Kegiatan</button>
-              </div>
-            </div>
+        <div class="card">
+          <div class="card-header"><div style="display:flex;align-items:center;gap:16px"><span class="cal-month-label" id="full-cal-label"></span><div class="cal-nav-btns"><button class="cal-nav-btn" onclick="fullCalPrev()">❮</button><button class="cal-nav-btn" onclick="fullCalToday()">Hari Ini</button><button class="cal-nav-btn" onclick="fullCalNext()">❯</button></div></div></div>
+          <div class="card-body">
+            <div class="cal-days-header" style="grid-template-columns:repeat(7,1fr)"><div class="cal-day-name" style="color:#c0392b">Min</div><div class="cal-day-name">Sen</div><div class="cal-day-name">Sel</div><div class="cal-day-name">Rab</div><div class="cal-day-name">Kam</div><div class="cal-day-name">Jum</div><div class="cal-day-name">Sab</div></div>
+            <div class="cal-grid" id="full-cal-grid"></div>
           </div>
         </div>
       </div>
@@ -254,12 +271,17 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-agenda"><div class="modal"><div class="modal-header"><div class="modal-title" id="modal-agenda-title"></div><button class="modal-close" onclick="closeModal('modal-agenda')">X</button></div><div class="modal-body" id="modal-agenda-body"></div></div></div>
-<div class="modal-overlay" id="modal-tahapan"><div class="modal"><div class="modal-header"><div class="modal-title">Update Tahapan</div><button class="modal-close" onclick="closeModal('modal-tahapan')">X</button></div><div class="modal-body" id="modal-tahapan-body"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-tahapan')">Batal</button><button class="btn btn-primary" onclick="saveTahapanUpdate()">Simpan</button></div></div></div>
-<div class="modal-overlay" id="modal-view-tahapan"><div class="modal"><div class="modal-header"><div class="modal-title">Detail Tahapan</div><button class="modal-close" onclick="closeModal('modal-view-tahapan')">X</button></div><div class="modal-body" id="modal-view-tahapan-body"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-view-tahapan')">Tutup</button><button class="btn btn-primary" id="btn-edit-tahapan">Edit</button></div></div></div>
-<div class="modal-overlay" id="modal-tutup"><div class="modal"><div class="modal-header"><div class="modal-title">Tutup Berkas</div><button class="modal-close" onclick="closeModal('modal-tutup')">X</button></div><div class="modal-body"><div class="form-group mb-3"><label>Alasan Penutupan</label><textarea class="form-control" id="tutup-alasan" required></textarea></div><div class="form-group"><label>Upload Dokumen</label><input type="file" class="form-control" id="tutup-file" accept="application/pdf"></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-tutup')">Batal</button><button class="btn btn-danger" onclick="saveTutupBerkas()">Tutup Berkas</button></div></div></div>
-<div class="modal-overlay" id="modal-buka"><div class="modal"><div class="modal-header"><div class="modal-title">Buka Berkas</div><button class="modal-close" onclick="closeModal('modal-buka')">X</button></div><div class="modal-body"><div class="form-group"><label>Alasan Dibuka</label><textarea class="form-control" id="buka-alasan" required></textarea></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-buka')">Batal</button><button class="btn btn-primary" onclick="saveBukaBerkas()">Buka Berkas</button></div></div></div>
-<div class="modal-overlay" id="modal-pdf-viewer"><div class="modal" style="width:95%; max-width:1000px; height:90vh; display:flex; flex-direction:column;"><div class="modal-header"><div class="modal-title" id="pdf-viewer-title" style="font-size:16px;">Pratinjau</div><button class="modal-close" onclick="closeModal('modal-pdf-viewer')">X</button></div><div class="modal-body" style="flex:1; padding:0; background:#E8E8E8;"><iframe id="pdf-iframe" style="width:100%; height:100%; border:none;"></iframe></div></div></div>
+<div class="modal-overlay" id="modal-agenda">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title" id="modal-agenda-title"></div><button class="modal-close" onclick="closeModal('modal-agenda')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div>
+    <div class="modal-body" id="modal-agenda-body"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-tahapan"><div class="modal"><div class="modal-header"><div class="modal-title">Update Tahapan</div><button class="modal-close" onclick="closeModal('modal-tahapan')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="modal-body" id="modal-tahapan-body"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-tahapan')">Batal</button><button class="btn btn-primary" onclick="saveTahapanUpdate()">Simpan & Unggah</button></div></div></div>
+<div class="modal-overlay" id="modal-view-tahapan"><div class="modal"><div class="modal-header"><div class="modal-title">Detail Tahapan</div><button class="modal-close" onclick="closeModal('modal-view-tahapan')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="modal-body" id="modal-view-tahapan-body"></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-view-tahapan')">Tutup</button><button class="btn btn-primary" id="btn-edit-tahapan">Edit Data</button></div></div></div>
+<div class="modal-overlay" id="modal-tutup"><div class="modal"><div class="modal-header"><div class="modal-title">Tutup Berkas</div><button class="modal-close" onclick="closeModal('modal-tutup')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="modal-body"><div class="form-group mb-3"><label>Alasan Penutupan *</label><textarea class="form-control" id="tutup-alasan" required></textarea></div><div class="form-group"><label>Upload Dokumen (PDF) *</label><input type="file" class="form-control" id="tutup-file" accept="application/pdf"></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-tutup')">Batal</button><button class="btn btn-danger" onclick="saveTutupBerkas()">Tutup Berkas</button></div></div></div>
+<div class="modal-overlay" id="modal-buka"><div class="modal"><div class="modal-header"><div class="modal-title">Buka Berkas</div><button class="modal-close" onclick="closeModal('modal-buka')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="modal-body"><div class="form-group"><label>Alasan Dibuka *</label><textarea class="form-control" id="buka-alasan" required></textarea></div></div><div class="modal-footer"><button class="btn btn-secondary" onclick="closeModal('modal-buka')">Batal</button><button class="btn btn-primary" onclick="saveBukaBerkas()">Buka Berkas</button></div></div></div>
+<div class="modal-overlay" id="modal-pdf-viewer"><div class="modal" style="width:95%; max-width:1000px; height:90vh; display:flex; flex-direction:column;"><div class="modal-header"><div class="modal-title" id="pdf-viewer-title" style="font-size:16px;">Pratinjau</div><button class="modal-close" onclick="closeModal('modal-pdf-viewer')"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></div><div class="modal-body" style="flex:1; padding:0; background:#E8E8E8;"><iframe id="pdf-iframe" style="width:100%; height:100%; border:none;"></iframe></div></div></div>
 <div id="toast-container"></div>
 
 <script>
@@ -279,9 +301,9 @@ const rawNTB = {
   "Bima": { "Woha": "Donggobolo,Naru,Rabakodo,Talabiu,Tente", "Sape": "Bugis,Naru Barat,Sangia" }
 };
 const ntbData = {}; for (const kab in rawNTB) { ntbData[kab] = {}; for (const kec in rawNTB[kab]) { ntbData[kab][kec] = rawNTB[kab][kec].split(',').sort(); } }
-function initWilayah() { const k = document.getElementById('f-kabupaten'); if(!k)return; k.innerHTML='<option value="">-- Pilih --</option>'; Object.keys(ntbData).sort().forEach(kab => k.add(new Option(kab, kab))); }
-function handleKabupatenChange() { const k = document.getElementById('f-kabupaten').value, c = document.getElementById('f-kecamatan'), d = document.getElementById('f-desa'); c.innerHTML='<option value="">-- Pilih --</option>'; d.innerHTML='<option value="">-- Pilih --</option>'; d.disabled=true; if(k&&ntbData[k]){ c.disabled=false; Object.keys(ntbData[k]).sort().forEach(kec => c.add(new Option(kec, kec))); } else c.disabled=true; }
-function handleKecamatanChange() { const k = document.getElementById('f-kabupaten').value, c = document.getElementById('f-kecamatan').value, d = document.getElementById('f-desa'); d.innerHTML='<option value="">-- Pilih --</option>'; if(k&&c&&ntbData[k][c]){ d.disabled=false; ntbData[k][c].forEach(desa => d.add(new Option(desa, desa))); d.add(new Option("Lainnya...","Lainnya"));} else d.disabled=true; }
+function initWilayah() { const k = document.getElementById('f-kabupaten'); if(!k)return; k.innerHTML='<option value="">-- Pilih Kota/Kabupaten --</option>'; Object.keys(ntbData).sort().forEach(kab => k.add(new Option(kab, kab))); }
+function handleKabupatenChange() { const k = document.getElementById('f-kabupaten').value, c = document.getElementById('f-kecamatan'), d = document.getElementById('f-desa'); c.innerHTML='<option value="">-- Pilih Kecamatan --</option>'; d.innerHTML='<option value="">-- Pilih Desa/Kelurahan --</option>'; d.disabled=true; if(k&&ntbData[k]){ c.disabled=false; Object.keys(ntbData[k]).sort().forEach(kec => c.add(new Option(kec, kec))); } else c.disabled=true; }
+function handleKecamatanChange() { const k = document.getElementById('f-kabupaten').value, c = document.getElementById('f-kecamatan').value, d = document.getElementById('f-desa'); d.innerHTML='<option value="">-- Pilih Desa/Kelurahan --</option>'; if(k&&c&&ntbData[k][c]){ d.disabled=false; ntbData[k][c].forEach(desa => d.add(new Option(desa, desa))); d.add(new Option("Lainnya...","Lainnya"));} else d.disabled=true; }
 
 // ══════════════════════════════════════════════════════════
 // 2. OTENTIKASI & GATEKEEPER UI (RBAC)
@@ -295,7 +317,6 @@ const USERS = {
 let currentUser = null;
 
 function checkLogin() {
-  // Bersihkan data login versi lama agar tidak crash
   if (localStorage.getItem('sipentas-logged-in') === 'true') { localStorage.removeItem('sipentas-logged-in'); }
   const storedUser = localStorage.getItem('sipentas-user');
   
@@ -344,9 +365,7 @@ function applyRoleUI() {
   else if(currentUser.role === 'operator_kanwil') { badge.style.color = '#B7791F'; badge.querySelector('.dot').style.background = '#B7791F'; }
   else { badge.style.color = '#6A1B9A'; badge.querySelector('.dot').style.background = '#6A1B9A'; }
 
-  // Sembunyikan form tambah & kalender edit jika pimpinan
   document.getElementById('nav-tambah').style.display = currentUser.role === 'pimpinan' ? 'none' : 'flex';
-  document.getElementById('cal-add-panel').style.display = currentUser.role === 'pimpinan' ? 'none' : 'flex';
 }
 
 // ══════════════════════════════════════════════════════════
@@ -382,13 +401,9 @@ const TAHAPAN_LABELS = ['Surat Usulan dari Kantah', 'Telaah Staff', 'Penelitian 
 const STATUS_MAP = { 0:{label:'Usulan Masuk',cls:'status-0'}, 1:{label:'Telaah Staff',cls:'status-1'}, 2:{label:'Penelitian Lapang',cls:'status-2'}, 3:{label:'Gelar Kasus',cls:'status-3'}, 4:{label:'Penerbitan SK',cls:'status-4'}, 5:{label:'Selesai',cls:'status-5'} };
 
 function saveData() { localStorage.setItem('sipentas-cases', JSON.stringify(cases)); localStorage.setItem('sipentas-events', JSON.stringify(calendarEvents)); }
-
 function logActivity(caseId, actionDesc) {
   const c = cases.find(x => x.id === caseId);
-  if (c) {
-    if (!c.auditTrail) c.auditTrail = [];
-    c.auditTrail.unshift({ date: new Date().toISOString(), userName: currentUser.name, userRole: currentUser.label, action: actionDesc });
-  }
+  if (c) { if (!c.auditTrail) c.auditTrail = []; c.auditTrail.unshift({ date: new Date().toISOString(), userName: currentUser.name, userRole: currentUser.label, action: actionDesc }); }
 }
 
 // ══════════════════════════════════════════════════════════
@@ -403,7 +418,7 @@ function navigateTo(page, param) {
   if (page === 'list-cacat' || page === 'list-putusan') renderTable(page.split('-')[1]);
   if (page === 'dashboard') { updateStats(); renderDashboard(); renderMiniCal(); renderCharts(); }
   if (page === 'tambah') resetForm(param);
-  if (page === 'kalender') { renderFullCal(); const s=document.getElementById('new-event-berkas'); if(s) s.innerHTML='<option value="">-- Pilih Berkas --</option>'+cases.filter(c=>!c.isClosed).map(c=>`<option value="${c.id}">${c.nomorberkas}</option>`).join(''); }
+  if (page === 'kalender') { renderFullCal(); }
 }
 
 function updateStats() {
@@ -423,7 +438,7 @@ function renderCharts() {
 function renderDashboard() {
   const tbody = document.getElementById('recent-cases-tbody'); const recent = [...cases].sort((a,b) => new Date(b.tglUsulan) - new Date(a.tglUsulan)).slice(0,8);
   if (!recent.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#999;padding:20px">Kosong</td></tr>'; return; }
-  tbody.innerHTML = recent.map(c => `<tr onclick="openDetail('${c.id}')"><td><code>${c.nomorberkas}</code></td><td>${c.pemohon}</td><td>${c.jenis==='cacat'?'Cacat':'Putusan'}</td><td>${c.kantah}</td><td><span class="status-badge ${c.isClosed?'':STATUS_MAP[c.currentStep].cls}">${c.isClosed?'🔒 Ditutup':STATUS_MAP[c.currentStep].label}</span></td></tr>`).join('');
+  tbody.innerHTML = recent.map(c => `<tr onclick="openDetail('${c.id}')"><td><code>${c.nomorberkas}</code></td><td>${c.pemohon}</td><td><span class="badge ${c.jenis === 'cacat' ? 'badge-admin' : 'badge-court'}"><span class="badge-dot" style="background:${c.jenis==='cacat'?'var(--gray-dark)':'var(--white)'}"></span> ${c.jenis === 'cacat' ? 'Cacat Adm.' : 'Putusan PN'}</span></td><td>${c.kantah}</td><td><span class="status-badge ${c.isClosed?'':STATUS_MAP[c.currentStep].cls}">${c.isClosed?'🔒 Ditutup':STATUS_MAP[c.currentStep].label}</span></td></tr>`).join('');
 }
 
 function renderTable(type) {
@@ -435,7 +450,6 @@ function renderTable(type) {
   if (!fil.length) { tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:#999;padding:30px">Tidak ada data</td></tr>`; return; }
   tbody.innerHTML = fil.map(c => {
     let prog = c.isClosed ? 100 : Math.round((c.currentStep/5)*100);
-    // HANYA ADMIN BISA MENGHAPUS BERKAS
     let btnHapus = currentUser.role === 'admin_kanwil' ? `<button class="btn btn-danger btn-sm" onclick="deleteCase('${c.id}')">Hapus</button>` : '';
     return `<tr onclick="openDetail('${c.id}')"><td><code>${c.nomorberkas}</code></td><td>${c.kantah}</td><td>${c.pemohon}</td><td>${type==='putusan'?c.noputs||'-':c.nosert||'-'}</td><td>${c.desa||'-'}</td><td>${fmtDate(c.tglUsulan)}</td><td><span class="status-badge ${c.isClosed?'':STATUS_MAP[c.currentStep]?.cls}">${c.isClosed?'🔒 Ditutup':STATUS_MAP[c.currentStep]?.label}</span></td><td>${prog}%</td><td onclick="event.stopPropagation()"><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" onclick="openDetail('${c.id}')">Detail</button>${btnHapus}</div></td></tr>`;
   }).join('');
@@ -453,12 +467,19 @@ function resetForm(preselect) {
   switchFormTab('info'); togglePutsanField(); document.getElementById('f-jenis').addEventListener('change', togglePutsanField); 
   initWilayah(); 
   
-  // ROLE CHECK: Paksa field PJ jika role adalah Operator
+  // POPULASI DROPDOWN PJ BERKAS
   const pjInput = document.getElementById('f-pj');
+  pjInput.innerHTML = '<option value="">-- Pilih Penanggung Jawab --</option>';
+  Object.values(USERS).filter(u => u.role !== 'pimpinan').forEach(u => pjInput.add(new Option(u.name, u.name)));
+
   if(currentUser.role === 'operator_kanwil') {
-    pjInput.value = currentUser.name; pjInput.disabled = true; document.getElementById('f-pj-help').textContent = "Anda terdaftar sebagai PJ berkas secara otomatis.";
+    pjInput.value = currentUser.name; 
+    pjInput.disabled = true; 
+    document.getElementById('f-pj-help').textContent = "Anda terdaftar sebagai PJ berkas secara otomatis.";
   } else {
-    pjInput.value = ''; pjInput.disabled = false; document.getElementById('f-pj-help').textContent = "Admin berhak menetapkan PJ berkas.";
+    pjInput.value = ''; 
+    pjInput.disabled = false; 
+    document.getElementById('f-pj-help').textContent = "Pilih penanggung jawab berkas (operator/admin).";
   }
 }
 function togglePutsanField() { document.getElementById('f-noputs-group').style.display = document.getElementById('f-jenis').value === 'putusan' ? 'block' : 'none'; }
@@ -470,10 +491,13 @@ async function submitForm(e) {
   if(uI.files[0]) { uD.file = await readFileAsBase64(uI.files[0]); uD.name = uI.files[0].name; }
   if(bI.files[0]) { bD.file = await readFileAsBase64(bI.files[0]); bD.name = bI.files[0].name; }
 
+  // Pastikan nilai terambil walaupun dropdown didisable
+  const pjVal = currentUser.role === 'operator_kanwil' ? currentUser.name : document.getElementById('f-pj').value;
+
   const newId = 'c' + Date.now();
   cases.push({ 
     id: newId, nomorberkas: document.getElementById('f-nomorberkas').value, jenis: j, kantah: document.getElementById('f-kantah').value, 
-    tglUsulan: document.getElementById('f-tglUsulan').value, pemohon: document.getElementById('f-pemohon').value, kontak: document.getElementById('f-kontak').value, pj: document.getElementById('f-pj').value, 
+    tglUsulan: document.getElementById('f-tglUsulan').value, pemohon: document.getElementById('f-pemohon').value, kontak: document.getElementById('f-kontak').value, pj: pjVal, 
     noputs: document.getElementById('f-noputs').value, dokumenUsulan: uD, pemeganghak: document.getElementById('f-pemeganghak').value, jenissert: document.getElementById('f-jenissert').value, nosert: document.getElementById('f-nosert').value, 
     luas: document.getElementById('f-luas').value, kabupaten: document.getElementById('f-kabupaten').value, kecamatan: document.getElementById('f-kecamatan').value, desa: document.getElementById('f-desa').value, dokumenbt: bD, uraian: document.getElementById('f-uraian').value, 
     tahapan: Array(6).fill({date:'',note:'',file:null,fileName:''}), currentStep: 0, isClosed: false, auditTrail: [] 
@@ -484,7 +508,7 @@ async function submitForm(e) {
 }
 
 let updId='', updIdx=0;
-function openUpdateTahapan(id, idx) { updId=id; updIdx=idx; const c=cases.find(x=>x.id===id); document.getElementById('modal-tahapan-body').innerHTML = `<div class="form-group mb-3"><label>Tanggal Selesai *</label><input type="date" class="form-control" id="u-d" value="${c.tahapan[idx].date}"></div><div class="form-group mb-3"><label>Catatan</label><textarea class="form-control" id="u-n">${c.tahapan[idx].note}</textarea></div><div class="form-group"><label>Dokumen Bukti (PDF)</label><input type="file" class="form-control" id="u-f" accept="application/pdf"></div>`; openModal('modal-tahapan'); }
+function openUpdateTahapan(id, idx) { updId=id; updIdx=idx; const c=cases.find(x=>x.id===id); document.getElementById('modal-tahapan-body').innerHTML = `<div class="form-group mb-3"><label>Tanggal Selesai *</label><input type="date" class="form-control" id="u-d" value="${c.tahapan[idx].date}"></div><div class="form-group mb-3"><label>Catatan</label><textarea class="form-control" id="u-n" style="min-height:80px;">${c.tahapan[idx].note}</textarea></div><div class="form-group"><label>Dokumen Bukti (PDF)</label><input type="file" class="form-control" id="u-f" accept="application/pdf"></div>`; openModal('modal-tahapan'); }
 async function saveTahapanUpdate() {
   const d=document.getElementById('u-d').value, n=document.getElementById('u-n').value, fI=document.getElementById('u-f'); if(!d){showToast('Isi tanggal!','error');return;}
   const c=cases.find(x=>x.id===updId); let fD=c.tahapan[updIdx].file, fN=c.tahapan[updIdx].fileName;
@@ -510,7 +534,6 @@ function saveBukaBerkas(){ const a=document.getElementById('buka-alasan').value;
 function openDetail(id) {
   const c = cases.find(x => x.id === id); if (!c) return; prevPage = currentPage; currentPage = 'detail';
 
-  // ROLE CHECK LOGIC: Operator hanya bisa update jika dia PJ nya
   const isAdmin = currentUser.role === 'admin_kanwil';
   const isOperator = currentUser.role === 'operator_kanwil';
   const canEdit = isAdmin || (isOperator && c.pj === currentUser.name);
@@ -564,7 +587,7 @@ function viewTahapan(id, idx) {
 }
 
 // ══════════════════════════════════════════════════════════
-// 8. KALENDER (DIKEMBALIKAN PENUH SEPERTI SEMULA)
+// 8. KALENDER (DENGAN POPUP KEGIATAN & TANDA HIJAU)
 // ══════════════════════════════════════════════════════════
 let miniCalDate = new Date(); let fullCalDate = new Date();
 function dateKey(y, m, d) { return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; } 
@@ -576,7 +599,7 @@ function renderMiniCal() {
   let html = ''; let total = Math.ceil((first + days) / 7) * 7; 
   for (let i = 0; i < total; i++) { 
     const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); 
-    const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); 
+    const holiday = HOLIDAYS_2025[key]; const events = !isOther ? getEventsForDate(key) : []; 
     let cls = 'cal-cell' + (isOther ? ' other-month' : '') + (!isOther && new Date(y, m, dayNum).toDateString() === today.toDateString() ? ' today' : '') + (holiday ? ' holiday' : '') + (!isOther && events.length ? ' has-event' : ''); 
     html += `<div class="${cls}" onclick="${!isOther ? `openDayModal('${key}')` : ''}">${isOther ? '' : dayNum}</div>`; 
   } 
@@ -591,8 +614,19 @@ function renderFullCal() {
   let html = ''; let total = Math.ceil((first + days) / 7) * 7; 
   for (let i = 0; i < total; i++) { 
     const dayNum = i - first + 1; const isOther = dayNum < 1 || dayNum > days; const key = dateKey(y, m, dayNum); 
-    const holiday = HOLIDAYS_2025[key]; const events = !isOther ? getEventsForDate(key) : []; const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); 
-    html += `<div class="cal-cell" style="${isOther ? 'opacity:0.3;' : ''}${isToday ? 'background:var(--black);color:white;border-radius:6px;' : ''}min-height:64px;align-items:flex-start;padding:6px;border:1px solid var(--border);border-radius:4px;flex-direction:column;gap:3px" onclick="${!isOther ? `openDayModal('${key}')` : ''}"><div style="${(i % 7 === 0 || holiday) ? 'color:#c0392b;' : ''}${isToday ? 'color:white;' : ''}font-size:12px;font-weight:${isToday||holiday?'700':'400'}">${isOther ? '' : dayNum}</div>${holiday && !isOther ? `<div style="font-size:9px;color:#c0392b;">${holiday.slice(0,20)}</div>` : ''}${events.slice(0,2).map(e => `<div style="font-size:9px;background:var(--black);color:white;padding:1px 5px;border-radius:3px;overflow:hidden">${escapeHTML(e.title).slice(0,14)}</div>`).join('')}</div>`; 
+    const holiday = HOLIDAYS_2025[key]; const events = !isOther ? getEventsForDate(key) : []; 
+    const isToday = !isOther && new Date(y, m, dayNum).toDateString() === today.toDateString(); 
+    
+    // Logika Warna Hijau
+    const hasEvStyle = (!isOther && events.length) ? 'background:#E8F5E9; border:1px solid #C8E6C9;' : (isToday ? 'background:var(--black); border:1px solid var(--black);' : 'background:var(--white); border:1px solid var(--border);');
+    const textStyle = isToday ? 'color:white;' : ((!isOther && events.length) ? 'color:#1B5E20;' : ((i % 7 === 0 || holiday) ? 'color:#c0392b;' : 'color:var(--text);'));
+
+    html += `<div class="cal-cell" style="${isOther ? 'opacity:0.3; background:transparent; border:1px solid transparent;' : hasEvStyle} min-height:84px; align-items:flex-start; padding:8px; border-radius:6px; flex-direction:column; gap:4px; cursor:${isOther ? 'default' : 'pointer'}; transition: transform 0.2s, box-shadow 0.2s;" ${!isOther ? `onclick="openDayModal('${key}')" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';"` : ''}>
+        <div style="font-size:13px; font-weight:${isToday || holiday || (!isOther && events.length) ? '700' : '500'}; ${textStyle}">${isOther ? '' : dayNum}</div>
+        ${holiday && !isOther ? `<div style="font-size:10px; color:#c0392b; font-weight:600;">${holiday.slice(0,20)}</div>` : ''}
+        ${events.slice(0,2).map(e => `<div style="font-size:10px; background:#1B5E20; color:white; padding:3px 6px; border-radius:4px; width:100%; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${escapeHTML(e.title)}</div>`).join('')}
+        ${events.length > 2 ? `<div style="font-size:10px; color:#1B5E20; font-weight:600;">+${events.length - 2} lagi</div>` : ''}
+    </div>`;
   } 
   document.getElementById('full-cal-grid').innerHTML = html; 
 }
@@ -600,19 +634,54 @@ function fullCalPrev() { fullCalDate = new Date(fullCalDate.getFullYear(), fullC
 function fullCalNext() { fullCalDate = new Date(fullCalDate.getFullYear(), fullCalDate.getMonth() + 1, 1); renderFullCal(); } 
 function fullCalToday() { fullCalDate = new Date(); renderFullCal(); }
 
+// POPUP TAMBAH KEGIATAN BARU DENGAN DROPDOWN BERKAS
 function openDayModal(key) { 
   const [y, m, d] = key.split('-'); const holiday = HOLIDAYS_2025[key]; const events = getEventsForDate(key); 
   document.getElementById('modal-agenda-title').textContent = `Kegiatan — ${parseInt(d)} ${MONTHS[parseInt(m)-1]} ${y}`; 
   let html = holiday ? `<div style="background:#FFF5F5;border:1px solid #FFD0CC;border-radius:8px;padding:12px 16px;margin-bottom:14px;color:#c0392b;font-weight:500;font-size:13px">🎌 ${holiday}</div>` : ''; 
-  events.forEach(e => { 
-    html += `<div style="border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:10px"><div style="font-size:14px;font-weight:500;">${escapeHTML(e.title)}</div>${e.berkasId ? `<div style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Terkait: ${escapeHTML(cases.find(x=>x.id===e.berkasId)?.nomorberkas || '')}</div>` : ''} ${currentUser.role !== 'pimpinan' ? `<button onclick="deleteEvent('${e.id}');closeModal('modal-agenda')" style="margin-top:8px;font-size:11px;color:#c0392b;background:none;border:none;cursor:pointer;padding:0">Hapus Kegiatan</button>` : ''}</div>`; 
-  }); 
+  
+  if (events.length > 0) {
+    html += `<div style="margin-bottom: 16px;">`;
+    events.forEach(e => { 
+      let berkasHtml = '';
+      if (e.berkasId) {
+        const b = cases.find(x => x.id === e.berkasId);
+        if (b) berkasHtml = `<div style="font-size:11.5px; color:var(--text-muted); margin-top:4px;">Berkas Terkait: <strong style="color:var(--text)">${escapeHTML(b.nomorberkas)}</strong></div>`;
+      }
+      html += `<div style="border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:10px"><div style="font-size:14px;font-weight:600;color:var(--text);">${escapeHTML(e.title)}</div>${berkasHtml} ${currentUser.role !== 'pimpinan' ? `<button onclick="deleteEvent('${e.id}');closeModal('modal-agenda')" style="margin-top:10px;font-size:11px;background:#FFF5F5;color:#C0392B;border:1px solid #FFD0CC;border-radius:4px;padding:4px 10px;cursor:pointer;">Hapus</button>` : ''}</div>`; 
+    });
+    html += `</div>`;
+  } else {
+    html += `<p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">Belum ada kegiatan pada tanggal ini.</p>`;
+  }
+
+  // Tampilkan Form input langsung di dalam pop-up jika bukan Pimpinan
+  if (currentUser.role !== 'pimpinan') {
+      let activeCasesOptions = cases.filter(c => !c.isClosed).map(c => `<option value="${c.id}">${escapeHTML(c.nomorberkas)} - ${escapeHTML(c.pemohon)}</option>`).join('');
+      html += `<div style="padding-top:16px; border-top:1px solid var(--border);">
+        <div style="font-size:13px; font-weight:700; margin-bottom:12px; color:var(--text);">Tambah Kegiatan Baru</div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Judul Kegiatan *</label>
+          <input type="text" class="form-control" id="quick-event-title" placeholder="Contoh: Sidang Lapangan" required>
+        </div>
+        <div class="form-group" style="margin-bottom:16px;">
+          <label>Berkas Terkait</label>
+          <select class="form-control" id="quick-event-berkas">
+            <option value="">-- Tidak ada / Pilih Berkas --</option>
+            ${activeCasesOptions}
+          </select>
+        </div>
+        <button class="btn btn-primary" style="width:100%;font-size:13px;padding:10px;" onclick="quickAddEvent('${key}')">Simpan Kegiatan</button>
+      </div>`;
+  }
+
   document.getElementById('modal-agenda-body').innerHTML = html; openModal('modal-agenda'); 
 }
 
-function addCalendarEvent() { 
-  const d = document.getElementById('new-event-date').value, t = document.getElementById('new-event-title').value, b = document.getElementById('new-event-berkas').value;
-  if(d && t) { calendarEvents.push({id:'ev'+Date.now(), date:d, title:t, berkasId:b}); saveData(); renderFullCal(); renderMiniCal(); showToast('Tersimpan!','success'); document.getElementById('new-event-title').value = ''; document.getElementById('new-event-berkas').value = ''; } 
+function quickAddEvent(key) { 
+  const t = document.getElementById('quick-event-title').value, b = document.getElementById('quick-event-berkas').value;
+  if(t) { calendarEvents.push({id:'ev'+Date.now(), date:key, title:t, berkasId: b}); saveData(); renderFullCal(); renderMiniCal(); closeModal('modal-agenda'); showToast('Tersimpan!','success'); } 
+  else { showToast('Judul wajib diisi!', 'error'); }
 } 
 function deleteEvent(id) { calendarEvents = calendarEvents.filter(e => e.id !== id); saveData(); renderFullCal(); renderMiniCal(); } 
 
